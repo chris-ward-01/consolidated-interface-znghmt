@@ -1,0 +1,116 @@
+
+
+
+
+
+.close-button{
+      display: none;
+      position: absoulte;
+      top: 3px;
+      right: -3px;
+    }
+
+.editor-tab__content{
+  // Padding and height added so events can be reflected
+  // 
+  // Each tab has an outer container with padding that prevents
+  // custom events to expand the the whole tab-size padding is removed
+  // below and added here to the content so tabs maintain dimensions
+  // while being able to catch all events
+  padding-right: 16px;
+  padding-left: 16px;
+  height: 48px;
+  &:hover{
+     .close-button{
+        display: flex;
+      }
+        td-notification-count{
+          display: none;
+        }
+  }
+    .tab-action-area{
+    position: absolute;
+    display: flex;
+    right: 0px;
+    height: 40px;
+  }
+}
+
+:host ::ng-deep {
+    .mat-tab-group .mat-tab-label{
+      padding: 0;
+      .tab-name{
+        max-width: 250px;
+        text-transform: none;
+      }
+     &.mat-tab-label-active {
+       .editor-tab__content{
+          
+          .close-button{
+          display: flex;
+        }
+        &.hasUnsavedChanges{
+          .close-button{
+          display: none;
+        }
+         &:hover{
+     .close-button{
+        display: flex;
+      }
+        td-notification-count{
+          display: none;
+        }
+  }
+        }
+       }
+     } 
+  }
+
+
+  
+
+.hasUnsavedChanges{
+  td-notification-count{
+    display: inherit;
+  }
+}
+
+
+  .mat-button,
+.mat-raised-button,
+.mat-flat-button,
+.mat-stroked-button {
+  &.mat-button-sm {
+    padding: 0 10px;
+    line-height: 24px;
+  }
+  mat-icon.material-icons, mat-icon.material-icons.mat-icon {
+    font-size: 16px;
+  }
+}
+.mat-icon-button,
+.mat-stroked-button {
+  &.mat-button-sm {
+    width: 28px;
+    height: 28px;
+      mat-icon.material-icons, mat-icon.material-icons.mat-icon {
+    font-size: 16px;
+  }
+  }
+}
+
+
+.tab-loader{
+  margin-top: 12px;
+  margin-right: 10px;
+  transition: all 2s;
+}
+
+.tab-running {
+  margin-top: 12px;
+  margin-right: 10px;
+  font-size: 17px;
+}
+
+}
+

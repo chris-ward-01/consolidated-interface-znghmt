@@ -1,0 +1,11 @@
+<mat-nav-list dense>
+  <ng-template let-version let-index="index" let-last="last" ngFor [ngForOf]="versions">
+    <a mat-list-item [routerLink]="'/roles/details'">
+      <mat-icon mat-list-icon>verified_user</mat-icon>
+      <div mat-line>{{version.name}}</div>
+      <div mat-line> added on {{version.updated | date}} </div>
+      <mat-icon matTooltip="compare">info_outline</mat-icon>
+    </a>
+    <mat-divider *ngIf="!last"></mat-divider>
+  </ng-template>
+</mat-nav-list>

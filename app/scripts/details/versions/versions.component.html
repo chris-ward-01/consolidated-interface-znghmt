@@ -1,0 +1,53 @@
+<div flex layout="column" flex class="overflow-hidden">
+    <ng-container *ngIf='!diff.isActive'>
+    <div class='pad mat-content'>
+      <mat-nav-list dense>
+        <ng-template let-version let-index="index" let-last="last" ngFor [ngForOf]="versions">
+          <a mat-list-item>
+            <mat-icon mat-list-icon>folder</mat-icon>
+            <div mat-line>v{{version.name}}</div>
+            <div mat-line> {{version.updated | date}} </div>
+            <mat-icon matTooltip="compare" (click)='diff.isActive = true;'>compare_arrows</mat-icon>
+          </a>
+          <mat-divider *ngIf="!last"></mat-divider>
+        </ng-template>
+      </mat-nav-list>
+    </div>
+	</ng-container>
+
+	<ng-container *ngIf='diff.isActive'>
+    <td-message #messageDemo class="push-bottom" color="accent" 
+ sublabel="Viewing diff mode" icon="info">
+      <button mat-stroked-button td-message-actions color="accent" (click)='diff.isActive = false' class='push-right-sm'>Close</button>
+    </td-message>
+    <div class='pad'>
+      <div layout="row">
+        <div flex="50">
+          <mat-form-field appearance="fill" class="push-left-sm">
+            <mat-label>Select version</mat-label>
+            <mat-select>
+              <mat-option>v2.5 (latest)</mat-option>
+              <mat-option>v2.4</mat-option>
+              <mat-option>v2.3</mat-option>
+              <mat-option>v2.2</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div flex="50">
+          <mat-form-field appearance="fill">
+            <mat-label>Select version</mat-label>
+            <mat-select>
+              <mat-option>v2.5 (latest)</mat-option>
+              <mat-option>v2.4</mat-option>
+              <mat-option>v2.3</mat-option>
+              <mat-option>v2.2</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-card>
+        <td-code-diff-editor [original]="original" [value]="modified" #editor [style.height.px]='600' class="editor" [theme]="_themeService.map({ 'dark-theme': 'td-dark', 'light-theme': 'vs' }) | async" language="sql" flex></td-code-diff-editor>
+      </mat-card>
+    </div>
+	</ng-container>
+</div>

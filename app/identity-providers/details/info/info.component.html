@@ -1,0 +1,67 @@
+<div flex>
+  <ng-container *ngIf='!edit.isActive'>
+    <td-message #messageDemo class="push-bottom-sm" color="primary" icon="none">
+    <button mat-stroked-button td-message-actions class='push-right text-upper' (click)='edit.isActive = true'>Edit</button>
+    <button mat-stroked-button td-message-actions class='push-right text-upper'>Disable</button>
+    <button mat-stroked-button td-message-actions class="text-upper">Remove</button>
+  </td-message>
+    <div class='pad '>
+      <div class='push-bottom pad-top-sm'>
+        <div class='mat-caption tc-faded push-bottom-sm'>Name</div>
+        <div class='tc mat-body-1'>Okta</div>
+      </div>
+      <div class='push-bottom pad-top-sm'>
+        <div class='mat-caption tc-faded push-bottom-sm'>Type</div>
+        <div class='tc mat-body-1'>SAML</div>
+      </div>
+      <div class='push-bottom pad-top-sm'>
+        <div class='mat-caption tc-faded push-bottom-sm'>Url</div>
+        <div class='tc mat-body-1'>https://teradata.okta.com</div>
+      </div>
+    </div>
+	</ng-container>
+
+	<ng-container *ngIf='edit.isActive'>
+    <td-message #messageDemo class="push-bottom-sm" color="accent" 
+ sublabel="Unsaved changes" icon="warning">
+      <button mat-button td-message-actions (click)='edit.isActive = false' class='push-right-sm'>CANCEL</button>
+      <button mat-stroked-button td-message-actions color='accent' [disabled]='!detailsForm.valid'>SAVE</button>
+    </td-message>
+    <div class='pad pad-top-md'>
+      <form #detailsForm="ngForm">
+        <div layout='column'>
+          <mat-form-field appearance='outline'>
+            <mat-label>Name</mat-label>
+            <input matInput required placeholder="title" value="Crime analysis">
+          </mat-form-field>
+
+          <mat-form-field appearance='outline'>
+            <mat-label>Short Description</mat-label>
+            <input matInput placeholder="Subtitle" value="Times, locations and descriptions of crimes from the Boston Police Department">
+          </mat-form-field>
+          <div class="push-bottom" layout="row">
+            <mat-form-field appearance='outline' flex>
+              <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                        [removable]="removable" (removed)="remove(fruit)">
+                  {{tag.name}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New tag..."
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur"
+                      (matChipInputTokenEnd)="add($event)">
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+          <div class="push-bottom">
+            <div class="pad-left-sm push-bottom mat-label">Description</div>
+            <td-text-editor [(ngModel)]="editorVal" name="editor"></td-text-editor>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+	</ng-container>
+</div>

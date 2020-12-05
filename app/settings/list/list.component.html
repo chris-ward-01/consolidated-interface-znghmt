@@ -1,0 +1,77 @@
+<td-layout layout-fill layout="column" flex class="relative">
+  <mat-toolbar flex="none" class='facade-font-to-remove bgc mat-elevation-z0'>
+    <span>Settings</span>
+    <span flex></span>
+    <button mat-icon-button class='tc-faded'>
+      <mat-icon>apps</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <div layout="column" flex="100" class="overflow-hidden">
+    <div class='pad-left pad-right' layout='row' layout-align='start center'>
+      <mat-icon class='tc-faded push-right'>search</mat-icon>
+      <td-search-input class='pull-top-xs pull-bottom-sm' style="
+          max-width: 600px;
+            width: 100%;
+          " placeholder="search" [showUnderline]="false" (search)="searchInputTerm = $event"
+        (clear)="searchInputTerm = ''">
+        ></td-search-input>
+      <span flex></span>
+      <button mat-icon-button (click)="filters.toggle()">
+        <mat-icon class='tc-faded'>filter_list</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div layout="column" flex class="overflow-auto">
+      <mat-drawer-container layout="column" flex>
+        <mat-drawer-content layout="column" flex>
+          <div class="mat-content">
+            <table style="width:100%;background:none" mat-table multiTemplateDataRows [dataSource]="dataSource">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell width="20" *matCellDef="let element"> Setting name </td>
+              </ng-container>
+              
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell width="30" *matCellDef="let element"> setting description </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell width="10" *matCellDef="let element"> {{element.status}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row [routerLink]="['details']" class='cursor-pointer'
+                *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row);">
+              </tr>
+            </table>
+          </div>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-drawer-content>
+        <mat-drawer flex layout="column" mode="side" opened="false" #filters position="end">
+          <td-sidesheet>
+            <td-sidesheet-header>
+              <td-sidesheet-title>Filters</td-sidesheet-title>
+              <button mat-icon-button td-sidesheet-header-action>
+                <mat-icon matTooltipPosition="before" matTooltip="Close" (click)="filters.toggle()">close</mat-icon>
+              </button>
+            </td-sidesheet-header>
+            <td-sidesheet-content flex layout="column">
+              <div>
+
+              </div>
+            </td-sidesheet-content>
+            <td-sidesheet-actions>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left" color="accent">Apply</button>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left">Cancel</button>
+            </td-sidesheet-actions>
+          </td-sidesheet>
+        </mat-drawer>
+      </mat-drawer-container>
+
+    </div>
+  </div>
+</td-layout>

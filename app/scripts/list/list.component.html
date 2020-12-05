@@ -1,0 +1,149 @@
+<td-layout layout-fill layout="column" flex class="relative">
+  <mat-toolbar flex="none" class='facade-font-to-remove bgc mat-elevation-z0'>
+    <span>Scripts</span>
+    <span flex></span>
+    <button mat-raised-button color='accent'>
+      <span>CREATE</span>
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button class='tc-faded'><mat-icon>apps</mat-icon></button>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <div layout="column" flex="100" class="overflow-hidden">
+    <div class='pad-left pad-right' layout='row' layout-align='start center'>
+      <mat-icon class='tc-faded push-right'>search</mat-icon>
+      <td-search-input
+      class='pull-top-xs pull-bottom-sm push-right'
+          style="width: 100%;"
+          flex
+          placeholder="search"
+          [showUnderline]="false"
+          (search)="searchInputTerm = $event"
+          (clear)="searchInputTerm = ''">
+      ></td-search-input>
+      <button mat-icon-button (click)="filters.toggle()">
+        <mat-icon class='tc-faded'>view_column</mat-icon>
+      </button>
+      <button mat-icon-button (click)="filters.toggle()">
+        <mat-icon class='tc-faded'>filter_list</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div layout="column" flex class="overflow-auto">
+      <mat-drawer-container layout="column" flex>
+        <mat-drawer-content layout="column" flex>
+          <div class="mat-content"  layout="column" flex>
+            <mat-nav-list hide-gt-sm>
+              <ng-template let-script let-index="index" let-last="last" ngFor [ngForOf]="scripts">
+                <a mat-list-item [routerLink]="'/scripts/details'" [ngClass]="{'active' : index == 0}">
+                  <h3 mat-line>{{ script.name }}</h3>
+                  <p mat-line>{{ script.description }}</p>
+                </a>
+                <mat-divider></mat-divider>
+              </ng-template>
+            </mat-nav-list>
+            <table hide-sm hide-xs style="width:100%;background:none" mat-table multiTemplateDataRows [dataSource]="dataSource">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Name </th>
+                <td mat-cell width="30" *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell width="30" *matCellDef="let element"> {{element.description}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="sql">
+                <th mat-header-cell *matHeaderCellDef> SQL </th>
+                <td mat-cell width="30" *matCellDef="let element"> <td-highlight lang="sql">{{element.sql}}</td-highlight> </td>
+              </ng-container>
+
+              <ng-container matColumnDef="system">
+                <th mat-header-cell *matHeaderCellDef> System </th>
+                <td mat-cell width="10" *matCellDef="let element"> {{element.system}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell width="10" *matCellDef="let element"> {{element.status}} </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row [routerLink]="['details']" class='cursor-pointer' *matRowDef="let row; columns: displayedColumns"
+                (click)="selection.toggle(row);">
+              </tr>
+            </table>
+          </div>
+          <mat-divider></mat-divider>
+          <mat-paginator pageSize="25" [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+        </mat-drawer-content>
+        <mat-drawer flex layout="column" mode="side" opened="true" #filters position="end">
+          <td-sidesheet>
+            <td-sidesheet-header>
+              <td-sidesheet-title>Filters</td-sidesheet-title>
+              <button mat-icon-button td-sidesheet-header-action>
+                <mat-icon matTooltipPosition="before" matTooltip="Close" (click)="filters.toggle()">close</mat-icon>
+              </button>
+            </td-sidesheet-header>
+            <td-sidesheet-content flex layout="column">
+              <div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Group</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Groups</mat-option>
+                      <mat-option value="2">Finance</mat-option>
+                      <mat-option value="3">Marketing</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Owner</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Owners</mat-option>
+                      <mat-option value="2">al183013</mat-option>
+                      <mat-option value="3">ka823842</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <mat-divider class="push-top push-bottom"></mat-divider>
+                <p class="text-lg pad-left-sm">Filesize Filters</p>
+                <div layout="row" class="pull-top-sm pad-left-sm">
+                  <mat-form-field flex-gt-sm="60">
+                    <mat-label>Size</mat-label>
+                    <input matInput type="number" placeholder="Enter size" value="">
+                    <span matSuffix>GB</span>
+                    <mat-hint>Filter by total size</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="pad-top pad-left-sm">
+                  <mat-form-field flex-gt-sm="60">
+                    <mat-label>Allocated</mat-label>
+                    <input matInput type="number" placeholder="Enter size">
+                    <span matSuffix>GB</span>
+                    <mat-hint>Filter by space allocated</mat-hint>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="pad-top pad-left-sm">
+                  <mat-form-field flex-gt-sm="60">
+                    <mat-label>Used</mat-label>
+                    <input matInput type="number" placeholder="Enter size">
+                    <span matSuffix>GB</span>
+                    <mat-hint>Filter by space used</mat-hint>
+                  </mat-form-field>
+                </div>
+              </div>
+            </td-sidesheet-content>
+            <td-sidesheet-actions>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left" color="accent">Apply</button>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left">Cancel</button>
+            </td-sidesheet-actions>
+          </td-sidesheet>
+        </mat-drawer>
+      </mat-drawer-container>
+
+    </div>
+  </div>
+</td-layout>

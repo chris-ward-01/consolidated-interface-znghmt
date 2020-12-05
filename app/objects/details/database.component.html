@@ -1,0 +1,22 @@
+<td-layout fullscreen class="relative">
+  <mat-toolbar flex="none" class='mat-elevation-z0'>
+    <span>ACC_MKTG</span>
+    <span flex></span>
+    <button mat-raised-button color='accent'>
+      <span>CREATE</span>
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button class='tc-faded'><mat-icon>apps</mat-icon></button>
+  </mat-toolbar>
+  <div layout="column" flex class="overflow-hidden">
+    <td-message #messageDemo  color="none" 
+  sublabel="Operational" icon="check_circle">
+        <button mat-button td-message-actions class='push-right-sm text-upper'>Delete</button>
+        <button mat-button td-message-actions class='push-right-sm text-upper'>Edit Metadata</button>
+        <button mat-stroked-button td-message-actions color='accent' class="text-upper">Query</button>
+    </td-message>
+    <div flex class="mat-content">
+      content
+    </div>
+  </div>
+</td-layout>

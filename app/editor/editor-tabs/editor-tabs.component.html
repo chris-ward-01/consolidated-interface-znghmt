@@ -1,0 +1,51 @@
+<mat-tab-group 
+  disableRipple 
+  [@.disabled]="true" 
+  class='pad-left' 
+  animationDuration="0ms" #scriptTabs  
+  >
+	<ng-container *ngFor='let tab of tabs'>
+		<mat-tab #currentTab *ngIf='!tab?.closed' class="editor-tab" [style.position]="'relative'" >
+			<ng-template mat-tab-label>
+				<div layout="row" layout-align="space-between center" class='editor-tab__content'
+					[class.hasUnsavedChanges]='!tab?.isSaved'>
+
+					<span class='push-right text-truncate tab-name'>{{ tab?.name }}</span>
+
+
+					<div class='tab-action-area'>
+
+						<ng-container *ngIf='!tab?.isRunning; else runningSpinner'>
+							<td-notification-count color="accent" matTooltip='Unsaved Changes'
+								[notifications]="!tab?.isSaved">
+							</td-notification-count>
+							<button mat-icon-button class='close-button mat-button-sm' (click)='closeTab(tab)'>
+                    <mat-icon>close</mat-icon>
+              </button>
+						</ng-container>
+
+						<ng-template #runningSpinner>
+              <!-- Option 1 -->
+                <!-- <mat-progress-spinner class='tab-loader' color='primary' [diameter]='14' [mode]="'indeterminate'">
+							</mat-progress-spinner>
+							 -->
+               <!-- Option 2 - Play icon(some icon) -->
+              <mat-icon class='tab-running tc-accent' matTooltip='Script Running'>
+                play_arrow
+              </mat-icon>
+
+						</ng-template>
+
+					</div>
+
+
+				</div>
+			</ng-template>
+		</mat-tab>
+	</ng-container>
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">add</mat-icon>
+    </ng-template>
+  </mat-tab>
+</mat-tab-group>

@@ -1,0 +1,234 @@
+<div layout="column" flex class="overflow-hidden">
+  <td-message #messageDemo  color="none" 
+ sublabel="Operational" icon="check_circle">
+      <button mat-button td-message-actions class='push-right-sm text-upper'>Stop</button>
+      <button mat-button td-message-actions class='push-right-sm text-upper'>Pause</button>
+      <button mat-button td-message-actions class='push-right-sm text-upper'>Restart</button>
+      <button mat-stroked-button td-message-actions color='accent' class="text-upper">Scale</button>
+  </td-message>
+  <div flex class="mat-content">
+    <div layout="row">
+      <div flex="100">
+        <mat-card>
+          <mat-card-title class="text-lg">Engine resource usage</mat-card-title>
+          <td-chart [style.height.px]="200" [config]="chart1"></td-chart>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'/monitoring/details'">View monitoring</a>
+              <a mat-button  class="text-upper">Scale</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+    <div layout-gt-sm="row">
+      <div flex-gt-sm="60">
+        <mat-card>
+          <mat-card-title class="text-lg">Application connections</mat-card-title>
+          <mat-divider></mat-divider>
+          <table class="mat-table" width="100%">
+            <thead role="rowgroup">
+              <tr class="mat-header-row" role="row">
+                <th class="mat-header-cell"> Database </th>
+                <th class="mat-header-cell"> IP Address </th>
+                <th class="mat-header-cell" width="10%">  </th>
+              </tr>
+            </thead>
+            <tbody role="rowgroup">
+              <tr class="mat-row" role="row">
+                <td class="mat-cell"> engine </td>
+                <td class="mat-cell"> 141.206.0.21 </td>
+                <td class="mat-cell">
+                  <button mat-icon-button>
+                    <mat-icon>content_copy</mat-icon>
+                  </button>
+                </td>
+              </tr>
+              <tr class="mat-row" role="row">
+                <td class="mat-cell"> dbc </td>
+                <td class="mat-cell"> 141.206.0.22 </td>
+                <td class="mat-cell">
+                  <button mat-icon-button>
+                    <mat-icon>content_copy</mat-icon>
+                  </button>
+                </td>
+              </tr>
+              <tr class="mat-row" role="row">
+                <td class="mat-cell"> viewpoint </td>
+                <td class="mat-cell"> 141.206.0.23 </td>
+                <td class="mat-cell">
+                  <button mat-icon-button matTooltip="Copy IP">
+                    <mat-icon>content_copy</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'code'">View more</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-title class="text-lg">Backups &amp; Data recovery</mat-card-title>
+          
+          <mat-divider></mat-divider>
+          <mat-nav-list dense>
+            <a mat-list-item [routerLink]="'/data-recovery/details'">
+              <mat-icon matListIcon class="tc-positive">check_circle</mat-icon>
+              <h3 matLine>Daily backup</h3>
+              <p matLine>Completed successfully</p>
+              <p matLine>Today at 09:12:05 pm</p>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item [routerLink]="'/data-recovery/details'">
+              <mat-icon matListIcon class="tc-caution">warning</mat-icon>
+              <h3 matLine>Weekly backup</h3>
+              <p matLine>Completed with errors</p>
+              <p matLine>Today at 09:12:05 pm</p>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item [routerLink]="'/data-recovery/details'">
+              <mat-icon matListIcon class="tc-negative">error</mat-icon>
+              <h3 matLine>Full system backup</h3>
+              <p matLine>Failed</p>
+              <p matLine>Today at 09:12:05 pm</p>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item [routerLink]="'/data-recovery/details'">
+              <mat-icon matListIcon class="tc-positive">check_circle</mat-icon>
+              <h3 matLine>Daily backup</h3>
+              <p matLine>Completed successfully</p>
+              <p matLine>Yesterday at 09:12:05 pm</p>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item [routerLink]="'/data-recovery/details'">
+              <mat-icon matListIcon class="tc-positive">check_circle</mat-icon>
+              <h3 matLine>Weekly backup</h3>
+              <p matLine>Completed successfully</p>
+              <p matLine>08/15/2020 at 09:12:05 pm</p>
+            </a>
+          </mat-nav-list>
+          <mat-divider></mat-divider>
+
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'data-recovery'">View Data Recovery</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-title class="text-lg">
+            <div layout="row" layout-align="start center">
+              <span flex>Notifications & Logs</span>
+              <mat-select placeholder="Filter type">
+
+              </mat-select>
+              <mat-select placeholder="Filter severity">
+
+              </mat-select>
+            </div>
+          </mat-card-title>
+          <mat-divider></mat-divider>
+
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'code'">View more</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-title class="text-lg">Engine resource usage</mat-card-title>
+          <mat-divider></mat-divider>
+
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'code'">View more</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <div flex-gt-sm="40">
+        <mat-card>
+          <mat-card-title class="text-lg">Engine details</mat-card-title>
+          <mat-divider></mat-divider>
+            <mat-list dense>
+            <mat-list-item>
+              <mat-icon matListIcon>battery_full</mat-icon>
+              <h3 matLine>155.05</h3>
+              <p matLine>Vantage units consumed</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>shutter_speed</mat-icon>
+              <h3 matLine>4,320</h3>
+              <p matLine>Terabyte hours</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>storage</mat-icon>
+              <h3 matLine>16.20.33.02</h3>
+              <p matLine>Version</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>cloud_circle</mat-icon>
+              <h3 matLine>AWS</h3>
+              <p matLine>Platform</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>pin_drop</mat-icon>
+              <h3 matLine>us-west-2</h3>
+              <p matLine>Region</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>build</mat-icon>
+              <h3 matLine>Development</h3>
+              <p matLine>Purpose</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>shutter_speed</mat-icon>
+              <h3 matLine>4,320</h3>
+              <p matLine>Terabyte hours</p>
+            </mat-list-item>
+          </mat-list>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'code'">Configure</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-title class="text-lg">Instance info</mat-card-title>
+          <mat-divider></mat-divider>
+
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'code'">View more</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-title class="text-lg">Help</mat-card-title>
+          <mat-divider></mat-divider>
+          
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'code'">View more</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>

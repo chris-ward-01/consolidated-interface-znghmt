@@ -1,0 +1,12 @@
+:host{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  ::ng-deep {
+    .mat-drawer-content {
+      display: flex !important;
+      flex-direction: column;
+      overflow: hidden !important;
+    }
+  }
+}

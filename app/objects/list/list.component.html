@@ -1,0 +1,178 @@
+<td-layout layout-fill layout="column" flex class="relative">
+  <mat-toolbar flex="none" class='facade-font-to-remove bgc mat-elevation-z0'>
+    <span>Object Management</span>
+    <span flex></span>
+    <button mat-icon-button matTooltip="Toggle from card to list cardView" (click)="toggleCards()" class="push-right">
+      <mat-icon *ngIf="!cardView">view_module</mat-icon>
+      <mat-icon *ngIf="cardView">list</mat-icon>
+    </button>
+    <button mat-raised-button color='accent'>
+      <span class="text-upper">Create</span>
+    </button>
+    <button mat-icon-button class='tc-faded'><mat-icon>apps</mat-icon></button>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <div layout="column" flex="100" class="overflow-hidden">
+    <div class='pad-left pad-right' layout='row' layout-align='start center'>
+      <mat-icon class='tc-faded push-right'>search</mat-icon>
+      <td-search-input class='pull-top-xs pull-bottom-sm push-right' flex style="width: 100%;" placeholder="search" [showUnderline]="false" (search)="searchInputTerm = $event"
+        (clear)="searchInputTerm = ''" (keyup)="applyFilter($event)">
+        ></td-search-input>
+      <button mat-icon-button (click)="filters.toggle()">
+        <mat-icon class='tc-faded'>filter_list</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div layout="column" flex class="overflow-auto">
+      <mat-drawer-container layout="column" flex>
+        <mat-drawer-content layout="column" flex>
+          <ng-container *ngIf="cardView">
+            <div layout-gt-sm="row" layout-wrap class="push-sm">
+            <ng-template let-database let-index="index" let-last="last" ngFor [ngForOf]="databases">
+              <div flex-sm="50" flex-gt-sm="25" class="pad-sm">
+                <mat-card matRipple [routerLink]="'details'" class="cursor-pointer">
+                  <div layout="row" class="pad">
+                    <div flex>
+                      <div class="text-truncate">{{database.DatabaseName}}</div>
+                      <div layout="row" layout-align="start center" class="mat-caption push-top-sm">
+                        <div layout="row" layout-align="start center" class="push-right-sm">
+                          <mat-icon svgIcon="td-icons:database" style="height:12px; width:12px;margin-top:-4px;"></mat-icon>
+                          <span>12</span>
+                        </div>
+                        <div layout="row" layout-align="start center" class="push-right-sm">
+                          <mat-icon class="text-xl">person</mat-icon>
+                          <span>91</span>
+                        </div>
+                        <div layout="row" layout-align="start center">
+                          <mat-icon class="text-xl">widgets</mat-icon>
+                          <span>4,092</span>
+                        </div>
+                      </div>
+                    </div>
+                    <mat-icon svgIcon="td-icons:database_lab"></mat-icon>
+                  </div>
+                  <div class="pad-top pad-left pad-right">
+                    The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+                      A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+                      bred for hunting.
+                  </div>
+                  <mat-card-actions>
+                    <mat-chip-list>
+                      <mat-chip>Countries</mat-chip>
+                      <mat-chip>World</mat-chip>
+                    </mat-chip-list>
+                  </mat-card-actions>
+                </mat-card>
+              </div>
+            </ng-template>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="!cardView">
+          <div class="mat-content"  layout="column" flex>
+            
+
+            
+            <table style="width:100%;background:none" mat-table matSort multiTemplateDataRows [dataSource]="dataSource">
+
+              <ng-container matColumnDef="DatabaseName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Top Level Database </th>
+                <td mat-cell [style.width.%]="30" *matCellDef="let element"> {{element.DatabaseName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="engine">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Engine </th>
+                <td mat-cell [style.width.%]="20" *matCellDef="let element"> TDICATTBH1TD01 </td>
+              </ng-container>
+
+              <ng-container matColumnDef="SpoolSpace">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Storage </th>
+                <td mat-cell [style.width.%]="20" *matCellDef="let element"> {{element.SpoolSpace | bytes}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Objects </th>
+                <td mat-cell [style.width.%]="30" *matCellDef="let element"> <button mat-button> View Objects</button> </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row [routerLink]="['details']" class='cursor-pointer' *matRowDef="let row; columns: displayedColumns"
+                (click)="selection.toggle(row);">
+              </tr>
+            </table>
+          </div>
+          <mat-divider></mat-divider>
+          <mat-paginator pageSize="25" [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+          </ng-container>
+        </mat-drawer-content>
+        <mat-drawer flex layout="column" mode="side" opened="false" #filters position="end">
+          <td-sidesheet>
+            <td-sidesheet-header>
+              <td-sidesheet-title>Filters</td-sidesheet-title>
+              <button mat-icon-button td-sidesheet-header-action>
+                <mat-icon matTooltipPosition="before" matTooltip="Close" (click)="filters.toggle()">close</mat-icon>
+              </button>
+            </td-sidesheet-header>
+            <td-sidesheet-content flex layout="column">
+              <div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Lab Groups</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Groups</mat-option>
+                      <mat-option value="2">UX Lab Group</mat-option>
+                      <mat-option value="3">Finance Lab Group</mat-option>
+                      <mat-option value="4">PM Lab Group</mat-option>
+                      <mat-option value="5">Experimental Lab Group</mat-option>
+                      <mat-divider></mat-divider>
+                      <mat-option value="new">New Lab Group</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Tags</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Tags</mat-option>
+                      <mat-option value="2">finance_data</mat-option>
+                      <mat-option value="3">research</mat-option>
+                      <mat-option value="4">tio</mat-option>
+                      <mat-option value="5">sales</mat-option>
+                      <mat-option value="6">customers</mat-option>
+                      <mat-option value="7">internal</mat-option>
+                      <mat-option value="8">fieldData</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Owner(s)</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Owners</mat-option>
+                      <mat-option value="2">al183013</mat-option>
+                      <mat-option value="3">ka823842</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <mat-divider class="push-top push-bottom"></mat-divider>
+                <p class="text-lg pad-left-sm">Filesize Filters</p>
+                <div layout="row" class="pull-top-sm pad-left-sm">
+                  <mat-form-field flex-gt-sm="60">
+                    <mat-label>Size</mat-label>
+                    <input matInput type="number" placeholder="Enter size" value="">
+                    <span matSuffix>GB</span>
+                    <mat-hint>Filter by total size</mat-hint>
+                  </mat-form-field>
+                </div>
+              </div>
+            </td-sidesheet-content>
+            <td-sidesheet-actions>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left" color="accent">Apply</button>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left">Cancel</button>
+            </td-sidesheet-actions>
+          </td-sidesheet>
+        </mat-drawer>
+      </mat-drawer-container>
+
+    </div>
+  </div>
+</td-layout>

@@ -1,0 +1,52 @@
+<td-layout-manage-list [opened]="toggleList" mode="side" sidenavWidth='300' [class]="'bgc relative'">
+  <div flex layout="column" td-sidenav-content>
+    <mat-toolbar flex="none" class='facade-font-to-remove mat-title mat-elevation-z0 bgc pad-right-none'>
+        <span [routerLink]="'/roles'" class="cursor-pointer">Roles</span>
+        <span flex></span>
+        <button mat-icon-button matTooltip="Filter">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="New script">
+          <mat-icon>add</mat-icon>
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+      <td-search-box #searchBoxElem alwaysVisible="true" backIcon="close" placeholder="search" flex="none" class="list-search pull-top-sm pull-bottom"></td-search-box>
+      <mat-divider></mat-divider>
+    <div class="mat-content" flex>
+        <mat-nav-list>
+          <ng-template let-role let-index="index" let-last="last" ngFor [ngForOf]="roles">
+            <a mat-list-item [ngClass]="{'active' : index == 0}">
+              <h3 mat-line><span class='type-input' >{{ role.name }}</span></h3>
+              <p mat-line>{{ role.description | truncate: 40 }}</p>
+            </a>
+            <mat-divider></mat-divider>
+          </ng-template>
+        </mat-nav-list>
+    </div>
+  </div>
+
+  <mat-toolbar class='facade-font-to-remove mat-elevation-z0 bgc'>
+    <mat-toolbar-row>
+      <button mat-icon-button matTooltip="Toggle list" [@tdRotate]="!toggleList" (click)="toggleList =! toggleList" class="push-right">
+        <mat-icon *ngIf="toggleList">menu_open</mat-icon>
+        <mat-icon *ngIf="!toggleList">menu_open</mat-icon>
+      </button>
+      <span>System_Admin</span>
+      <span flex></span>
+      <button mat-icon-button>
+      <mat-icon class='tc-faded'>
+        apps
+      </mat-icon>
+      </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="pull-top">
+      <nav mat-tab-nav-bar class="pull-bottom">
+        <a mat-tab-link *ngFor='let view of detailViews' [routerLink]="view.link" routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive" [routerLinkActiveOptions]="{exact: true}"> {{ view.name }} </a>
+      </nav>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <router-outlet></router-outlet>
+</td-layout-manage-list>

@@ -1,0 +1,211 @@
+<mat-divider></mat-divider>
+<div layout="column" flex class="overflow-hidden">
+    <div flex layout-gt-sm="row" class='pad mat-content'>
+      <div flex-gt-sm="50">
+        <mat-card>
+          <mat-card-title class="text-lg">Recent backups</mat-card-title>
+          <mat-divider></mat-divider>
+          <mat-nav-list dense>
+            <a mat-list-item>
+              <mat-icon matListIcon svgIcon="td-icons:database"></mat-icon>
+              <div matLine>
+                <div layout="row" layout-align="start center" flex>
+                  <span flex="25" class="mat-body-1">Full</span>
+                  <span flex class="mat-caption tc-faded">08/30/2020 10:56:00 AM</span>
+                  <span flex="25" layout="row" layout-align="start center">
+                    <mat-icon class="text-lg tc-caution">warning</mat-icon>
+                    <span class="mat-caption tc-caution push-left-xs">Errors</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item>
+              <mat-icon matListIcon svgIcon="td-icons:data_preparation"></mat-icon>
+              <div matLine>
+                <div layout="row" layout-align="start center" flex>
+                  <span flex="25" class="mat-body-1">Incremental</span>
+                  <span flex class="mat-caption tc-faded">08/30/2020 10:56:00 AM</span>
+                  <span flex="25" layout="row" layout-align="start center">
+                    <mat-icon class="text-lg tc-positive">check</mat-icon>
+                    <span class="mat-caption tc-positive push-left-xs">Successful</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item>
+              <mat-icon matListIcon svgIcon="td-icons:data_preparation"></mat-icon>
+              <div matLine>
+                <div layout="row" layout-align="start center" flex>
+                  <span flex="25" class="mat-body-1">Incremental</span>
+                  <span flex class="mat-caption tc-faded">08/30/2020 10:56:00 AM</span>
+                  <span flex="25" layout="row" layout-align="start center">
+                    <mat-icon class="text-lg tc-positive">check</mat-icon>
+                    <span class="mat-caption tc-positive push-left-xs">Successful</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item>
+              <mat-icon matListIcon svgIcon="td-icons:data_preparation"></mat-icon>
+              <div matLine>
+                <div layout="row" layout-align="start center" flex>
+                  <span flex="25" class="mat-body-1">Incremental</span>
+                  <span flex class="mat-caption tc-faded">08/30/2020 10:56:00 AM</span>
+                  <span flex="25" layout="row" layout-align="start center">
+                    <mat-icon class="text-lg tc-negative">error</mat-icon>
+                    <span class="mat-caption tc-negative push-left-xs">Failed</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+            <mat-divider></mat-divider>
+            <a mat-list-item>
+              <mat-icon matListIcon svgIcon="td-icons:data_preparation"></mat-icon>
+              <div matLine>
+                <div layout="row" layout-align="start center" flex>
+                  <span flex="25" class="mat-body-1">Incremental</span>
+                  <span flex class="mat-caption tc-faded">08/30/2020 10:56:00 AM</span>
+                  <span flex="25" layout="row" layout-align="start center">
+                    <mat-icon class="text-lg tc-positive">check</mat-icon>
+                    <span class="mat-caption tc-positive push-left-xs">Successful</span>
+                  </span>
+                </div>
+              </div>
+            </a>
+          </mat-nav-list>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'history'">View History</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-title class="text-lg">Backup schedule</mat-card-title>
+          <mat-divider></mat-divider>
+          <mat-list dense>
+            <mat-list-item>
+              <mat-icon matListAvatar class="tc-white bgc-cyan-600">schedule</mat-icon>
+              <h3 matLine>09:00 AM UTC every month on 1st Friday</h3>
+              <p matLine>Full backup</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListAvatar class="tc-white bgc-blue-grey-600">schedule</mat-icon>
+              <h3 matLine>09:00 AM UTC every day</h3>
+              <p matLine>Incremental backup</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <h3 matSubheader>Next scheduled executions</h3>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>schedule</mat-icon>
+              <h3 matLine>Jul 29 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>schedule</mat-icon>
+              <h3 matLine>Jul 30 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon color="accent">schedule</mat-icon>
+              <h3 matLine>Jul 31 at 09:00 AM UTC <span class="mat-caption tc-faded">(Full)</span></h3>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>schedule</mat-icon>
+              <h3 matLine>Aug 01 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>schedule</mat-icon>
+              <h3 matLine>Aug 02 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+            </mat-list-item>
+          </mat-list>
+          
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'schedule'">Edit Schedule</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+      <div flex-gt-sm="50">
+        <mat-card>
+          <mat-card-title class="text-lg">Summary</mat-card-title>
+          <mat-divider></mat-divider>
+            <mat-list dense>
+            <mat-list-item>
+              <mat-icon matListIcon>cloud_done</mat-icon>
+              <h3 matLine>24 databases, 1099 tables</h3>
+              <p matLine>included</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>cloud_off</mat-icon>
+              <h3 matLine>2 databases, 3 tables</h3>
+              <p matLine>excluded</p>
+            </mat-list-item>
+          </mat-list>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'objects'">Manage Objects</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+        <mat-card>
+          <mat-card-title class="text-lg">Settings</mat-card-title>
+          <mat-divider></mat-divider>
+            <mat-list dense>
+            <mat-list-item>
+              <mat-icon matListIcon>settings_backup_restore</mat-icon>
+              <h3 matLine>Partial backup</h3>
+              <p matLine>Type</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>event_note</mat-icon>
+              <h3 matLine>Incremental</h3>
+              <p matLine>Schedule</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>sort</mat-icon>
+              <h3 matLine>5 (Lowest)</h3>
+              <p matLine>Priority</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>content_copy</mat-icon>
+              <h3 matLine>2 copies</h3>
+              <p matLine>Retained copies</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>alarm</mat-icon>
+              <h3 matLine>Max time: 2 hours, 30 minutes</h3>
+              <p matLine>Auto-abort threshold</p>
+            </mat-list-item>
+            <mat-divider></mat-divider>
+            <mat-list-item>
+              <mat-icon matListIcon>check</mat-icon>
+              <h3 matLine>Enabled</h3>
+              <p matLine>Backup status</p>
+            </mat-list-item>
+          </mat-list>
+          <mat-divider></mat-divider>
+          <mat-card-actions>
+            <div layout="row">
+              <a mat-button color="accent" class="text-upper" [routerLink]="'settings'">Edit Settings</a>
+            </div>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+</div>

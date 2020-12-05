@@ -1,0 +1,64 @@
+<mat-divider></mat-divider>
+<div layout="column" flex class="overflow-hidden">
+  <td-message icon="" *ngIf="!selection.selected.length" [sublabel]="'Select multiple to change bulk settings'" class="pull-left" color="primary">
+  </td-message>
+  <td-message icon="" *ngIf="selection.selected.length" [sublabel]="selection.selected.length + ' selected'" class="pull-left" color="accent">
+    <button mat-stroked-button td-message-actions color="accent"  class="text-upper">
+      Remove all alerts
+    </button>
+  </td-message>
+  <div class='pad-left pad-right' layout='row' layout-align='start center'>
+    <mat-icon class='tc-faded push-right'>search</mat-icon>
+    <td-search-input class='pull-top-xs pull-bottom-sm' flex placeholder="search" [showUnderline]="false" (search)="searchInputTerm = $event"
+      (clear)="searchInputTerm = ''" (keyup)="applyFilter($event)">
+      ></td-search-input>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mat-content" layout="column" flex>
+    <table style="background:none" mat-table matSort multiTemplateDataRows [dataSource]="dataSource">
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell [style.width.px]="20" *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+     <ng-container matColumnDef="name">
+				<th mat-header-cell *matHeaderCellDef> Name </th>
+				<td mat-cell *matCellDef="let element"> {{element.name}} </td>
+			</ng-container>
+			<ng-container matColumnDef="description">
+				<th mat-header-cell *matHeaderCellDef> Description </th>
+				<td mat-cell *matCellDef="let element"> {{element.description}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="setting">
+				<th mat-header-cell *matHeaderCellDef>  </th>
+				<td mat-cell width="150" *matCellDef="let element"> 
+          <mat-form-field appearance="fill">
+            <mat-label>Setting</mat-label>
+            <mat-select>
+              <mat-option *ngFor="let alert of alerts" [value]="alert.value">
+                {{alert.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+			</ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row  *matRowDef="let row; columns: displayedColumns" >
+      </tr>
+    </table>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-paginator pageSize="5" [pageSizeOptions]="[5, 10, 20, 25, 50, 100]" showFirstLastButtons>
+  </mat-paginator>
+</div>

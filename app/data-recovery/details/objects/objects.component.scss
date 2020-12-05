@@ -1,0 +1,22 @@
+:host{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+
+  ::ng-deep {
+    .mat-button-toggle-group[dense] {
+      border-radius: 40px;
+
+      .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+        line-height: 34px;
+        padding: 0 15px;
+      }
+    }
+    .mat-sidenav-container,
+    .mat-sidenav-content,
+    .mat-sidenav {
+      display: flex !important;
+      overflow: hidden !important;
+    }
+  }
+}

@@ -1,0 +1,240 @@
+<div layout="column" flex class="overflow-hidden">
+    <ng-container *ngIf='!edit.isActive'>
+      <td-message #messageDemo class="push-bottom-sm" color="primary"  icon="" sublabel="Edit to modify schedule">
+      <button mat-stroked-button td-message-actions (click)='edit.isActive = true;' class="text-upper">Edit</button>
+    </td-message>
+    <div flex class='pad-left-md pad-right-md mat-content'>
+      <mat-list dense>
+        <mat-list-item>
+          <mat-icon matListAvatar class="tc-white bgc-cyan-600">schedule</mat-icon>
+          <h3 matLine>09:00 AM UTC every month on 1st Friday</h3>
+          <p matLine>Full backup</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon matListAvatar class="tc-white bgc-blue-grey-600">schedule</mat-icon>
+          <h3 matLine>09:00 AM UTC every day</h3>
+          <p matLine>Incremental backup</p>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <h3 matSubheader>Next scheduled executions</h3>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon matListIcon>schedule</mat-icon>
+          <h3 matLine>Jul 29 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon matListIcon>schedule</mat-icon>
+          <h3 matLine>Jul 30 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon matListIcon color="accent">schedule</mat-icon>
+          <h3 matLine>Jul 31 at 09:00 AM UTC <span class="mat-caption tc-faded">(Full)</span></h3>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon matListIcon>schedule</mat-icon>
+          <h3 matLine>Aug 01 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item>
+          <mat-icon matListIcon>schedule</mat-icon>
+          <h3 matLine>Aug 02 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+        </mat-list-item>
+      </mat-list>
+    </div>
+	</ng-container>
+
+	<ng-container *ngIf='edit.isActive'>
+    <td-message #messageDemo class="push-bottom-sm" color="accent" 
+ sublabel="Unsaved changes" icon="warning">
+      <button mat-button td-message-actions (click)='edit.isActive = false' class='push-right-sm'>CANCEL</button>
+      <button mat-stroked-button td-message-actions color='accent' [disabled]='!detailsForm.valid'>SAVE</button>
+    </td-message>
+    <div class='pad-left-md pad-right-md  mat-content' flex>
+      <form #detailsForm="ngForm">
+        <div class='push-bottom pad-top-sm' layout-gt-sm="row">
+          <div class='mat-body-2 push-bottom-sm' flex-gt-sm="10">Start</div>
+          <div class='tc mat-body-1'>
+            <mat-radio-group layout="column">
+              <mat-radio-button [value]="'immediately'" class="push-bottom-sm" checked>Immediately</mat-radio-button>
+              <mat-radio-button [value]="'startDate'">
+                <div layout="row" layout-align="start center">
+                  <span class="push-right">On</span>
+                  <mat-form-field flex-gt-sm="40" appearance='outline' dense>
+                    <input matInput required value="">
+                  </mat-form-field>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class='push-bottom pad-top-sm' layout-gt-sm="row">
+          <div flex-gt-sm="10"></div>
+          <mat-divider flex></mat-divider>
+        </div>
+        <div class='push-bottom pad-top-sm' layout-gt-sm="row">
+          <div class='mat-body-2 push-bottom-sm' flex-gt-sm="10">Repeat</div>
+          <div>
+            <div class='tc mat-body-1 push-bottom-sm'>
+              <div layout="row" layout-align="start center">
+                <div flex="10">every</div>
+                <mat-form-field flex-gt-sm="10" appearance='outline' dense class="push-right-sm">
+                  <input matInput required value="1">
+                </mat-form-field>
+                <mat-form-field flex-gt-sm="20" appearance='outline' layout="row" dense>
+                  <mat-select flex [value]="'3'">
+                    <mat-option value="1">day</mat-option>
+                    <mat-option value="2">week</mat-option>
+                    <mat-option value="3">month</mat-option>
+                    <mat-option value="4">year</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class='tc mat-body-1 push-bottom-sm'>
+              <div layout="row" layout-align="start center">
+                <div flex="10">on the</div>
+                <mat-form-field flex-gt-sm="20" appearance='outline' layout="row" dense class="push-right-sm">
+                  <mat-select flex [value]="'1'">
+                    <mat-option value="1">First</mat-option>
+                    <mat-option value="2">Second</mat-option>
+                    <mat-option value="3">Third</mat-option>
+                    <mat-option value="4">Last</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field flex-gt-sm="20" appearance='outline' layout="row" dense>
+                  <mat-select flex [value]="'1'">
+                    <mat-option value="1">Sunday</mat-option>
+                    <mat-option value="2">Monday</mat-option>
+                    <mat-option value="3">Tuesday</mat-option>
+                    <mat-option value="4">Wednesday</mat-option>
+                    <mat-option value="5">Thursday</mat-option>
+                    <mat-option value="6">Friday</mat-option>
+                    <mat-option value="7">Saturday</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class='tc mat-body-1'>
+              <div layout="row" layout-align="start center">
+                <div flex="10">at</div>
+                <mat-form-field flex-gt-sm="20" appearance='outline' layout="row" dense>
+                  <mat-select flex [value]="'14'">
+                    <mat-option value="00">00</mat-option>
+                    <mat-option value="01">01</mat-option>
+                    <mat-option value="02">02</mat-option>
+                    <mat-option value="03">03</mat-option>
+                    <mat-option value="04">04</mat-option>
+                    <mat-option value="05">05</mat-option>
+                    <mat-option value="06">06</mat-option>
+                    <mat-option value="07">07</mat-option>
+                    <mat-option value="08">08</mat-option>
+                    <mat-option value="09">09</mat-option>
+                    <mat-option value="10">10</mat-option>
+                    <mat-option value="11">11</mat-option>
+                    <mat-option value="12">12</mat-option>
+                    <mat-option value="13">13</mat-option>
+                    <mat-option value="14">14</mat-option>
+                    <mat-option value="15">15</mat-option>
+                    <mat-option value="16">16</mat-option>
+                    <mat-option value="17">17</mat-option>
+                    <mat-option value="18">18</mat-option>
+                    <mat-option value="19">19</mat-option>
+                    <mat-option value="20">20</mat-option>
+                    <mat-option value="21">21</mat-option>
+                    <mat-option value="22">22</mat-option>
+                    <mat-option value="23">23</mat-option>
+                    <mat-option value="24">24</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <span class="push-right-xs push-left-xs">:</span>
+                <mat-form-field flex-gt-sm="20" appearance='outline' layout="row" dense>
+                  <mat-select flex [value]="'00'">
+                    <mat-option value="00">00</mat-option>
+                    <mat-option value="01">01</mat-option>
+                    <mat-option value="02">02</mat-option>
+                    <mat-option value="03">03</mat-option>
+                    <mat-option value="04">04</mat-option>
+                    <mat-option value="05">05</mat-option>
+                    <mat-option value="06">06</mat-option>
+                    <mat-option value="07">07</mat-option>
+                    <mat-option value="08">08</mat-option>
+                    <mat-option value="09">09</mat-option>
+                    <mat-option value="10">10</mat-option>
+                    <mat-option value="11">11</mat-option>
+                    <mat-option value="12">12</mat-option>
+                    <mat-option value="13">13</mat-option>
+                    <mat-option value="14">14</mat-option>
+                    <mat-option value="15">15</mat-option>
+                    <mat-option value="16">16</mat-option>
+                    <mat-option value="17">17</mat-option>
+                    <mat-option value="18">18</mat-option>
+                    <mat-option value="19">19</mat-option>
+                    <mat-option value="20">20</mat-option>
+                    <mat-option value="21">21</mat-option>
+                    <mat-option value="22">22</mat-option>
+                    <mat-option value="23">23</mat-option>
+                    <mat-option value="24">24</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class='push-bottom pad-top-sm' layout-gt-sm="row">
+          <div flex-gt-sm="10"></div>
+          <mat-divider flex></mat-divider>
+        </div>
+        <div class='push-bottom pad-top-sm' layout-gt-sm="row">
+          <div class='mat-body-2 push-bottom-sm' flex-gt-sm="10">Ends</div>
+          <div class='tc mat-body-1'>
+            <mat-radio-group layout="column">
+              <mat-radio-button [value]="'never'" class="push-bottom-sm" checked>Never</mat-radio-button>
+              <mat-radio-button [value]="'endDate'">
+                <div layout="row" layout-align="start center">
+                  <span class="push-right">On</span>
+                  <mat-form-field flex-gt-sm="40" appearance='outline' dense>
+                    <input matInput required value="">
+                  </mat-form-field>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <mat-list dense>
+          <h3 matSubheader>Preview updated schedule (Save to apply)</h3>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon matListIcon>schedule</mat-icon>
+            <h3 matLine>Jul 29 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon matListIcon>schedule</mat-icon>
+            <h3 matLine>Jul 30 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon matListIcon color="accent">schedule</mat-icon>
+            <h3 matLine>Jul 31 at 09:00 AM UTC <span class="mat-caption tc-faded">(Full)</span></h3>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon matListIcon>schedule</mat-icon>
+            <h3 matLine>Aug 01 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <mat-icon matListIcon>schedule</mat-icon>
+            <h3 matLine>Aug 02 at 09:00 AM UTC <span class="mat-caption tc-faded">(Incremental)</span></h3>
+          </mat-list-item>
+        </mat-list>
+          
+      </form>
+    </div>
+	</ng-container>
+</div>

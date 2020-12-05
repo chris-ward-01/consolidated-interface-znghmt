@@ -1,0 +1,211 @@
+
+.mat-drawer[layout-align='start center'] {
+    .mat-drawer-inner-container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+      align-content: center;
+    height: 100%;
+    max-height: 100%;
+  }
+}
+mat-icon.material-icons.mat-icon.icon-featured,
+.mat-icon.icon-featured {
+  font-size: 28px;
+  width: 32px;
+  height: 32px;
+}
+mat-icon.material-icons.mat-icon.icon-header,
+.mat-icon.icon-header {
+  font-size: 1em;
+  width: auto;
+  height: 220px;
+  opacity: 0.75;
+}
+.mat-form-field[dense] {
+  .mat-form-field-wrapper {
+    padding: 0;
+    .mat-form-field-infix {
+      padding: 0;
+      padding-bottom: 5px;
+    }
+  }
+  &.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+    transform: translateY(0);
+  }
+}
+.pull-bottom-graphic {
+  margin-bottom: -280px;
+  opacity: 0.5;
+}
+.td-search-input .mat-form-field-infix {
+  width: auto;
+}
+.list-search .td-search-icon {
+  margin-top: -10px;
+  margin-left: 8px;
+  margin-right: -8px;
+}
+// Buttons
+.mat-button,
+.mat-raised-button,
+.mat-flat-button,
+.mat-stroked-button {
+  &.mat-button-sm {
+    padding: 0 10px;
+    line-height: 24px;
+  }
+  mat-icon.material-icons, mat-icon.material-icons.mat-icon {
+    font-size: 16px;
+  }
+}
+.mat-icon-button,
+.mat-stroked-button {
+  &.mat-button-sm {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+  }
+}
+.mat-list-base[dense] .mat-list-item .mat-list-item-content .mat-list-avatar {
+  max-width: 36px;
+}
+.mat-tree-invisible {
+  display: none;
+}
+.mat-tree {
+  & ul,
+  & li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+    ul {
+      padding-left: 16px;
+    }
+  }
+}
+.mat-tree-node.mat-list-base[dense] {
+  display: flex;
+}
+.mat-tree[dense] {
+  & ul,
+  & li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+    ul {
+      padding-left: 8px;
+    }
+  }
+  .mat-tree-node {
+    min-height: 20px;
+  }
+  mat-nav-list[dense] a[mat-list-item] .mat-list-item-content {
+    font-size: 12px;
+  }
+  .mat-tree-node.mat-list-base[dense] {
+    display: flex;
+  }
+  .mat-list-base[dense] {
+    padding-left: 0;
+    padding-top: 0;
+  }
+  .mat-list-base[dense] .mat-list-item .mat-list-item-content {
+    padding: 0;
+  }
+  .mat-list-base[dense] .mat-list-item {
+    height: 32px;
+    padding-left: 14px;
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+
+ mat-form-field[dense].mat-form-field-appearance-outline {
+  .mat-form-field-infix {
+    padding: 0.40em 0;
+    border-top: 0.3em solid transparent;
+  }
+  .mat-form-field-wrapper {
+    margin: 0;
+    padding: 0;
+  }
+  .mat-select-arrow-wrapper {
+    transform: translateY(0);
+  }
+  .mat-form-field-outline-start{
+    border-radius: 8px 0 0 8px;
+    min-width: 8px;
+  }
+  .mat-form-field-outline-end{
+    border-radius: 0 8px 8px 0;
+  }
+}
+  
+
+  // .collapsed {
+  //   a.mat-list-item {
+  //     .mat-list-item-content {
+  //       padding-left: 0;
+  //       mat-icon.mat-icon {
+  //         transform: translateX(19px);
+  //          &.collapsed-logo{
+  //           width: 37px;
+  //           height: auto;
+  //           transform: translateX(12px);
+  //         }
+  //       }
+       
+  //       td-notification-count {
+  //         transform: translateX(5px);
+  //       }
+  //     }
+  //   }
+  // }
+
+mat-nested-tree-node .mat-nav-list {
+  max-height: 38px;
+}
+
+
+// .dark-theme .mat-select-panel .mat-option.mat-selected:not(.mat-option-multiple) {
+//     background: rgba(255,255,255,0.04) !important;
+// }
+
+
+
+// Multifilter scss
+.filter-panel{
+  &.mat-menu-panel {
+  min-width: 610px !important;
+  max-width: fit-content !important;
+  border-radius: 8px !important;
+}
+}
+
+.tab-name, body .mat-tab-links a.mat-tab-link {
+ font-weight: 900 !important;
+}
+
+.nav-rail-menu{
+  position: absolute;
+  left: 65px;
+  top: -48px;
+}
+
+
+.hidden {
+  display: none;
+}
+
+.td-layout-manage-list-sidenav {
+  display: flex;
+  overflow: hidden;
+}

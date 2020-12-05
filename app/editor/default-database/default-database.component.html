@@ -1,0 +1,43 @@
+<div layout='row' layout-align='center center' class='pad-right'>
+	<mat-select [(value)]="activeConnection" disableRipple>
+
+
+			<mat-select-trigger>
+				<button mat-icon-button>
+					<mat-icon class='push-right-sm' matTooltip="Default session database active" matPrefix svgIcon="td-icons:database"></mat-icon>
+				</button>
+			</mat-select-trigger>
+			<mat-option #connectionOptions *ngFor="let connection of connections; let first = first; let last = last"
+				[value]="connection.value" [class.push-top-sm]='first' [class.push-bottom-sm]='last'
+				[style.minWidth.px]='240'>
+
+
+				<div layout='row' layout-align='center center'>
+					<mat-icon *ngIf='connection.value === activeConnection' matTooltip="Active session" class='tc-positive' svgIcon="td-icons:database_changed"></mat-icon>
+          <mat-icon *ngIf='connection.value != activeConnection'  matTooltip="Available session" class='tc-faded' svgIcon="td-icons:database"></mat-icon>
+					<div>
+						<div class='mat-input pull-top-xs push-bottom-xs'>
+							{{connection.viewValue}}
+						</div>
+						<div class='mat-caption pull-top push-bottom-sm tc-faded'>
+							{{connection.user}}
+						</div>
+
+					</div>
+
+					<span flex></span>
+
+
+				</div>
+			</mat-option>
+
+			<mat-divider></mat-divider>
+
+			<div layout='row' class='pad-sm' disableRipple>
+				<button mat-button color='accent' (click)='stopProp($event); openNewConnectionDialog()'>
+          Ignore default databases
+        </button>
+			</div>
+
+		</mat-select>
+</div>

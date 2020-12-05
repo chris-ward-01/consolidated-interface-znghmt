@@ -1,0 +1,296 @@
+<td-layout layout-fill class="relative" layout="column">
+  <div layout="row" layout-align="start center" [ngClass]="{'bgc-accent' : viewHeader}" class="pad-top-sm pad-right pad-bottom-sm pad-left  toolbar">
+    <span flex></span>
+    <button mat-icon-button matTooltip="View quickstarts" (click)="viewHeader =! viewHeader" class="push-right">
+      <mat-icon *ngIf="viewHeader">unfold_less</mat-icon>
+      <mat-icon *ngIf="!viewHeader">unfold_more</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="App launcher">
+      <mat-icon>apps</mat-icon>
+    </button>
+  </div>
+  <div flex class="overflow-auto">
+    <div data-cy="overview">
+      <!-- Header Section -->
+      <section *ngIf="viewHeader" class="bgc-accent" layout="row" layout-align="center center">
+        <div layout="row" layout-align="start end" layout-wrap class="overview-max-width overflow-visible tc-white-4 pad-left" flex>
+          <div flex="90" flex-gt-sm="75" layout="column">
+            <h1 class="mat-title push-bottom-none pad-top-sm tc-faded">{{ 'Get started' }}</h1>
+            <h3 class="mat-subheading-1 push-bottom-none tc-faded">
+              {{ 'Here are some helpful guided to get started' }}
+            </h3>
+            <div
+              id="tour-actions"
+              flex
+              layout="row"
+              layout-align="space-between start"
+              class="push-bottom push-top"
+            >
+              <div
+                flex
+                layout="column"
+                class="header-action-container push-right"
+                layout-align="center center"
+                *ngFor="let action of actionButtons"
+              >
+                <a
+                  mat-fab
+                  color="accent"
+                  class="header-action-button mat-elevation-z0"
+                  tdMediaToggle="gt-xs"
+                  [mediaClasses]="['push-bottom-sm']"
+                  [routerLink]="action.link"
+                  [queryParams]="action.queryParams"
+                >
+                  <mat-icon class="icon-featured" *ngIf="action.icon">{{ action.icon }}</mat-icon>
+                  <mat-icon class="icon-featured" *ngIf="action.svgIcon" svgIcon="{{ action.svgIcon }}"></mat-icon>
+                </a>
+                <div class="text-center mat-subheading-1 push-top-xs tc-faded">{{ action.name }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            tdMediaToggle="xs"
+            [mediaClasses]="['pull-bottom-graphic', 'z-1']"
+            flex-order-xs="1"
+            hide-xs
+            hide-sm
+            flex-gt-xs
+            layout="row"
+            layout-align="end center"
+            class="overflow-hidden"
+          >
+            <mat-icon class="icon-header pull-bottom-md" [svgIcon]="_themeService.map({ 'dark-theme': 'assets:illustration-dark', 'light-theme': 'assets:illustration-light' }) | async"></mat-icon>
+          </div>
+        </div>
+      </section>
+      <mat-divider></mat-divider>
+      <td-message #messageDemo class="pad-sm push-bottom" icon="lock_open" [color]="viewHeader ? 'accent' : 'primary'" label="Request a full Vantage Trial" sublabel="Test out a full production Trial for your company!">
+      <a td-message-actions mat-button href="https://www.teradata.com/Events/Universe" target="_blank" class="push-right">More Info</a>
+      <a td-message-actions color="accent" mat-stroked-button href="https://www.teradata.com/Events/Universe" target="_blank" class="push-right">Request Trial</a>
+
+      </td-message>
+      <!-- Content & Help Sections -->
+      <section layout-gt-xs="row" class="push" layout-align="center start">
+        <div class="overview-max-width" flex>
+          <div layout-gt-sm="row">
+
+            <section flex-gt-sm="35">
+              <mat-card>
+                <mat-card-title class="text-lg">Object management (catalog)</mat-card-title>
+                <div class="overflow-auto">
+                  <table style="width:100%;background:none" mat-table matSort multiTemplateDataRows [dataSource]="dataSource">
+                    <ng-container matColumnDef="DatabaseName">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Top Level Database </th>
+                      <td mat-cell [style.width.%]="30" *matCellDef="let element"> {{element.DatabaseName}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="SpoolSpace">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Storage </th>
+                      <td mat-cell [style.width.%]="20" *matCellDef="let element"> {{element.SpoolSpace | bytes}} </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr mat-row [routerLink]="['/objects/details']" class='cursor-pointer' *matRowDef="let row; columns: displayedColumns">
+                    </tr>
+                  </table>
+                  <mat-paginator  [pageSize]="15"></mat-paginator>
+                </div>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                  <div layout="row">
+                    <a mat-button color="accent" class="text-upper" [routerLink]="'objects'">View object management</a>
+                  </div>
+                </mat-card-actions>
+              </mat-card>
+            </section>
+            <!-- My Content Section -->
+            <section flex-gt-sm="35">
+              <mat-card>
+                <mat-card-title class="text-lg">
+                  <div layout="row" layout-align="start center">
+                    <span flex>Query history</span>
+                    <button mat-icon-button matTooltip="Filter users">
+                      <mat-icon>filter_list</mat-icon>
+                    </button> 
+                  </div>
+                </mat-card-title>
+                <div class="pad-xs">
+                  <ng-template let-query let-index="index" let-last="last" ngFor [ngForOf]="history">
+                    <div style="max-height: 50px" class="overflow-hidden">
+                      <td-highlight matRipple [routerLink]="'editor'" class="bgc pad-sm cursor-pointer relative push-top-xs push-bottom-xs" lang="sql">{{query.sql | truncate:80}}</td-highlight>
+                    </div>
+                    <mat-divider *ngIf="!last"></mat-divider>
+                  </ng-template>
+                </div>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                  <div layout="row">
+                    <a mat-button color="accent" class="text-upper">View in editor</a>
+                  </div>
+                </mat-card-actions>
+              </mat-card>
+
+              <mat-card>
+                <mat-card-title class="text-lg">Saved scripts &amp; queries</mat-card-title>
+                <mat-nav-list dense>
+                  <ng-template let-script let-index="index" let-last="last" ngFor [ngForOf]="scripts">
+                    <a mat-list-item [routerLink]="'/scripts/details'">
+                      <div mat-line>{{script.name}}</div>
+                      <div mat-line> {{script.description}} </div>
+                      <mat-icon matTooltip="compare">info</mat-icon>
+                    </a>
+                    <mat-divider *ngIf="!last"></mat-divider>
+                  </ng-template>
+                </mat-nav-list>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                  <div layout="row">
+                    <a mat-button color="accent" class="text-upper" [routerLink]="'scripts'">View all scripts</a>
+                  </div>
+                </mat-card-actions>
+              </mat-card>
+            </section>
+            
+            <!-- Learn More Section -->
+            <section flex-gt-sm="25" data-cy="heroDiv">
+
+              <mat-card>
+                <mat-card-title class="text-lg">Chir's</mat-card-title>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                  <div layout="row" layout-align="center center" class="push-bottom">
+                    <div flex-gt-sm="70" class="text-center">
+                      <div class="mat-subheading-2">No notifications configured</div>
+                      <div class="mat-body-1 pull-top push-bottom-sm">Learn to setup notifications on backups, engines, scripts &amp; more!</div>
+                      <button mat-button color="accent">Start tutorial</button>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card>
+                <mat-card-title class="text-lg">Chris's Card</mat-card-title>
+                <mat-divider></mat-divider>
+                <mat-card-content>
+                  <div layout="row" layout-align="center center" class="push-bottom">
+                    <div flex-gt-sm="70" class="text-center">
+                      <div class="mat-subheading-2">No notifications configured</div>
+                      <div class="mat-body-1 pull-top push-bottom-sm">Learn to setup notifications on backups, engines, scripts &amp; more!</div>
+                      <button mat-button color="accent">Start tutorial</button>
+                    </div>
+                  </div>
+                </mat-card-content>
+              </mat-card>
+
+              <mat-card>
+                <mat-card-title class="text-lg">Engine resource usage</mat-card-title>
+                <td-chart [style.height.px]="170" [config]="chart1"></td-chart>
+                <mat-divider></mat-divider>
+                <mat-nav-list dense>
+                  <ng-template let-engine let-index="index" let-last="last" ngFor [ngForOf]="engines">
+                    <a mat-list-item [routerLink]="'/engines/details'">
+                      <mat-icon matTooltip="health" matListAvatar color="accent">check</mat-icon>
+                      <div mat-line>{{engine.name}}</div>
+                      <div mat-line> {{engine.platform}} : {{engine.purpose}} </div>
+                      <mat-icon matTooltip="compare">settings</mat-icon>
+                    </a>
+                    <mat-divider *ngIf="!last"></mat-divider>
+                  </ng-template>
+                </mat-nav-list>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                  <div layout="row">
+                    <a mat-button color="accent" class="text-upper" [routerLink]="'monitoring/details'">monitoring</a>
+                    <a mat-button  class="text-upper">Manage engines</a>
+                  </div>
+                </mat-card-actions>
+              </mat-card>
+
+              <mat-card>
+                <mat-card-title class="text-lg">Idenity Management &amp; Users</mat-card-title>
+                <mat-nav-list dense>
+                  <a mat-list-item  [routerLink]="'/users'">
+                    <mat-icon matListAvatar>people</mat-icon>
+                    <div mat-line>Users</div>
+                    <span>1932</span>
+                  </a>
+                  <mat-divider></mat-divider>
+                  <a mat-list-item  [routerLink]="'/roles'">
+                    <mat-icon matListAvatar>accessibility_new</mat-icon>
+                    <div mat-line>Roles</div>
+                    <span>30</span>
+                  </a>
+                  <mat-divider></mat-divider>
+                  <a mat-list-item  [routerLink]="'/users'">
+                    <mat-icon matListAvatar>supervised_user_circle</mat-icon>
+                    <div mat-line>User Federation (LDAP, Active Directory)</div>
+                    <span>3</span>
+                  </a>
+                  <mat-divider></mat-divider>
+                  <a mat-list-item  [routerLink]="'/users'">
+                    <mat-icon matListAvatar>verified_user</mat-icon>
+                    <div mat-line>Identity Providers (Single-Sign-On)</div>
+                    <span>3</span>
+                  </a>
+                </mat-nav-list>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                  <div layout="row">
+                    <a mat-button color="accent" class="text-upper" [routerLink]="'/users'">Manage users</a>
+                    <a mat-button  class="text-upper" [routerLink]="'/roles'">Manage roles</a>
+                  </div>
+                </mat-card-actions>
+              </mat-card>
+              <mat-card>
+                <mat-card-title class="text-lg">Help</mat-card-title>
+                <div class="help-video bgc-accent pad-md" layout="column" layout-align="center center">
+                  <mat-icon class="text-super">play_circle_filled</mat-icon>
+                </div>
+                <mat-divider></mat-divider>
+                <mat-nav-list dense class=" pad-top-none push-bottom-md">
+                  <a *ngIf="useCasesAvailable" mat-list-item routerLink="/query" [queryParams]="{ help: 'use_cases' }">
+                    <mat-icon matListAvatar class="bgc-faded tc-white-4">featured_play_list</mat-icon>
+                    <h3 matLine>{{ 'USE_CASES' }}</h3>
+                    <p matLine>{{ 'USE_CASES_DESCRIPTION' }}</p>
+                  </a>
+                  <mat-divider></mat-divider>
+                  <a mat-list-item [href]="forumsUrl" target="_blank">
+                    <mat-icon matListAvatar class="bgc-faded tc-white-4">apps</mat-icon>
+                    <h3 matLine>{{ 'FORUMS' }}</h3>
+                    <p matLine>{{ 'FORUMS_DESCRIPTION' }}</p>
+                    <mat-icon class="tc-faded text-lg" matTooltip="{{ 'OPEN_NEW_WINDOW' }}">launch</mat-icon>
+                  </a>
+                  <mat-divider></mat-divider>
+                  <a mat-list-item [href]="documentationUrl" target="_blank">
+                    <mat-icon matListAvatar class="bgc-faded tc-white-4">help</mat-icon>
+                    <h3 matLine>{{ 'DOCUMENTATION' }}</h3>
+                    <p matLine>{{ 'DOCUMENTATION_DESCRIPTION' }}</p>
+                    <mat-icon class="tc-faded text-lg" matTooltip="{{ 'OPEN_NEW_WINDOW' }}">launch</mat-icon>
+                  </a>
+                  <mat-divider></mat-divider>
+                  <a mat-list-item [href]="supportUrl" target="_blank">
+                    <mat-icon matListAvatar class="bgc-faded tc-white-4">live_help</mat-icon>
+                    <h3 matLine>{{ 'SUPPORT' }}</h3>
+                    <p matLine>{{ 'SUPPORT_DESCRIPTION' }}</p>
+                    <mat-icon class="tc-faded text-lg" matTooltip="{{ 'OPEN_NEW_WINDOW' }}">launch</mat-icon>
+                  </a>
+                </mat-nav-list>
+                <mat-divider></mat-divider>
+                
+                <mat-card-actions>
+                  <div layout="row">
+                    <a [href]="videoUrl" target="_new" mat-button color="primary">{{ 'View Tutorials' }}</a>
+                  </div>
+                </mat-card-actions>
+              </mat-card>
+              
+
+            </section>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</td-layout>

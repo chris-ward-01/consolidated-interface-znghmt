@@ -1,0 +1,133 @@
+<td-layout layout-fill layout="column" flex class="relative">
+  <mat-toolbar flex="none" class='facade-font-to-remove bgc mat-elevation-z0'>
+    <span>User Federation</span>
+    <span flex></span>
+    <button mat-raised-button color='accent'>
+      <span class="text-upper">Add</span>
+      <mat-icon>add</mat-icon>
+    </button>
+    <button mat-icon-button class='tc-faded'>
+      <mat-icon>apps</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <div layout="column" flex="100" class="overflow-hidden">
+    <td-message icon="" *ngIf="selection.selected.length" [sublabel]="selection.selected.length + ' selected'" class="pull-left" color="accent">
+      <button mat-stroked-button td-message-actions color="accent" class="push-right text-upper">
+        Disable
+      </button>
+      <button mat-stroked-button td-message-actions color="accent" class="text-upper">
+        Delete
+      </button>
+    </td-message>
+    <div *ngIf="!selection.selected.length" class='pad-left pad-right' layout='row' layout-align='start center'>
+      <mat-icon class='tc-faded push-right'>search</mat-icon>
+      <td-search-input class='pull-top-xs pull-bottom-sm' style="
+          max-width: 600px;
+            width: 100%;
+          " placeholder="search" [showUnderline]="false" (search)="searchInputTerm = $event"
+        (clear)="searchInputTerm = ''" (keyup)="applyFilter($event)">
+        ></td-search-input>
+      <span flex></span>
+      <span class="push-right">
+        <mat-select #mySel placeholder="columns" [formControl]="myFormControl" multiple>
+          <mat-select-trigger>
+            <button mat-icon-button>
+              <mat-icon class="tc-faded">view_column</mat-icon>
+            </button>
+          </mat-select-trigger>
+          <mat-option [value]="0" (click)="toggleAllSelection()">All columns</mat-option>
+          <mat-divider></mat-divider>
+          <mat-option *ngFor="let column of columnsToDisplay" [value]="column">{{column}}</mat-option>
+        </mat-select>
+      </span>
+      <button mat-icon-button matTooltip="Filters" (click)="filters.toggle()">
+        <mat-icon class='tc-faded'>filter_list</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div layout="column" flex class="overflow-auto">
+      <mat-drawer-container layout="column" flex>
+        <mat-drawer-content layout="column" flex>
+          <div class="mat-content" layout="column" flex>
+            <table style="background:none" mat-table matSort multiTemplateDataRows [dataSource]="dataSource">
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="select">
+                <th mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                [aria-label]="checkboxLabel()">
+                  </mat-checkbox>
+                </th>
+                <td mat-cell [style.width.px]="10" *matCellDef="let row">
+                  <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row) : null"
+                                [checked]="selection.isSelected(row)"
+                                [aria-label]="checkboxLabel(row)">
+                  </mat-checkbox>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="name" sticky>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell [style.width.px]="100" *matCellDef="let element"> {{element.name}} </td>
+              </ng-container>
+              <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> description </th>
+                <td mat-cell [style.width.px]="100" *matCellDef="let element"> {{element.description}} </td>
+              </ng-container>
+              <ng-container matColumnDef="type">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> type </th>
+                <td mat-cell [style.width.px]="100" *matCellDef="let element"> {{element.type}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="url">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> url </th>
+                <td mat-cell [style.width.px]="100" *matCellDef="let element"> {{element.url}} </td>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row [routerLink]="['details']" class='cursor-pointer'
+                *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row);">
+              </tr>
+            </table>
+          </div>
+          <mat-divider></mat-divider>
+          <mat-paginator pageSize="25" [pageSizeOptions]="[5, 10, 20, 25, 50, 100]" showFirstLastButtons></mat-paginator>
+        </mat-drawer-content>
+        <mat-drawer flex layout="column" mode="side" opened="true" #filters position="end">
+          <td-sidesheet>
+            <td-sidesheet-header>
+              <td-sidesheet-title>Filters</td-sidesheet-title>
+              <button mat-icon-button td-sidesheet-header-action>
+                <mat-icon matTooltipPosition="before" matTooltip="Close" (click)="filters.toggle()">close</mat-icon>
+              </button>
+            </td-sidesheet-header>
+            <td-sidesheet-content flex layout="column">
+              <div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Type</mat-label>
+                    <mat-select multiple>
+                      <mat-option value="1">All Types</mat-option>
+                      <mat-divider></mat-divider>
+                      <ng-template let-role ngFor [ngForOf]="roles">
+                        <mat-option [value]="role._id">{{role.name}}</mat-option>
+                      </ng-template>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+            </td-sidesheet-content>
+            <td-sidesheet-actions>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left" color="accent">Apply</button>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left">Cancel</button>
+            </td-sidesheet-actions>
+          </td-sidesheet>
+        </mat-drawer>
+      </mat-drawer-container>
+
+    </div>
+  </div>
+</td-layout>

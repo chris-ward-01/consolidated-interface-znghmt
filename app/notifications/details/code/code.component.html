@@ -1,0 +1,65 @@
+<div flex>
+    <ng-container *ngIf='!edit.isActive'>
+      <td-message #messageDemo class="pad-sm push-bottom" color="primary" 
+ sublabel="No changes">
+      <button mat-button td-message-actions (click)='edit.isActive = false' class='push-right-sm'>Copy Code</button>
+      <a mat-stroked-button td-message-actions [routerLink]="'/editor'">Open in Editor</a>
+    </td-message>
+        <div class='pad pad-top-md'>
+          <div layout='row' class='pull-top pull-bottom-md' layout-align='end start'>
+            <button mat-icon-button (click)='edit.isActive = true;'>
+              <mat-icon class='tc-faded'>edit </mat-icon>
+            </button>
+          </div>
+          <div class='push-bottom pad-top-sm'>
+            <div class='mat-caption tc-faded push-bottom-sm'>Script Code</div>
+            <td-highlight lang="sql">
+              <![CDATA[
+CREATE FOREIGN TABLE demo_csv_foreign_table ,
+    EXTERNAL SECURITY DEFINER TRUSTED Auth_S3_Def
+    (
+        Location VARCHAR(2048) CHARACTER SET UNICODE CASESPECIFIC,
+        PAYLOAD DATASET INLINE LENGTH 64000 STORAGE FORMAT CSV
+    )
+    USING (
+        LOCATION  ('/az/extfsazblob.blob.core.windows.net/td-usgs/CSVDATA')
+    );
+ 
+SHOW TABLE demo_csv_foreign_table;
+ 
+CREATE MULTISET FOREIGN TABLE NOS_TEST.demo_csv_foreign_table ,FALLBACK ,
+     EXTERNAL SECURITY DEFINER TRUSTED AUTH_S3_DEF ,
+     MAP = TD_MAP1
+     (
+      Location VARCHAR(2048) CHARACTER SET UNICODE CASESPECIFIC,
+      PAYLOAD DATASET(2097088000) INLINE LENGTH 64000 STORAGE FORMAT CSV CHARACTER SET LATIN )
+USING
+(
+      LOCATION  ('/az/extfsazblob.blob.core.windows.net/td-usgs/CSVDATA')
+      MANIFEST  ('FALSE')
+      PATHPATTERN  ('$Var1/$Var2/$Var3/$Var4/$Var5/$Var6/$Var7/$Var8/$Var9/$Var10/$Var11/$Var12/$Var13/$Var14/$Var15/$Var16/$Var17/$Var18/$Var19/$Var20')
+      ROWFORMAT  ('{"character_set":"LATIN"}')
+      STOREDAS  ('TEXTFILE')
+)
+NO PRIMARY INDEX ;
+            ]]>
+            </td-highlight>
+          </div>
+        </div>
+	</ng-container>
+
+	<ng-container *ngIf='edit.isActive'>
+    <td-message #messageDemo class="pad-sm push-bottom" color="accent" 
+ sublabel="Unsaved changes" icon="warning">
+      <button mat-button td-message-actions (click)='edit.isActive = false' class='push-right-sm'>CANCEL</button>
+      <button mat-stroked-button td-message-actions color='accent'>SAVE</button>
+    </td-message>
+    <mat-divider></mat-divider>
+    <div class='pad pad-top-md'>
+      <mat-card>
+        <td-code-editor #editor [style.height.px]='600' class="editor" [theme]="_themeService.map({ 'dark-theme': 'td-dark', 'light-theme': 'vs' }) | async" [(ngModel)]="code" language="sql" flex>
+ </td-code-editor>
+      </mat-card>
+    </div>
+	</ng-container>
+</div>

@@ -1,0 +1,92 @@
+<mat-divider></mat-divider>
+<div layout="column" flex class="overflow-hidden">
+  <td-message icon="" *ngIf="!selection.selected.length" [sublabel]="'Select two queries to compare changes'" class="pull-left" color="primary">
+    <button mat-stroked-button td-message-actions class="text-upper">
+      Clear history
+    </button>
+  </td-message>
+  <td-message icon="" *ngIf="selection.selected.length" [sublabel]="selection.selected.length + ' selected queries'" class="pull-left" color="accent">
+    <button mat-button td-message-actions class="text-upper push-right">
+      Cancel
+    </button>
+    <button mat-stroked-button td-message-actions color="accent"  class="text-upper" [routerLink]="'/scripts/details/versions'">
+      Compare
+    </button>
+  </td-message>
+  <div class='pad-left pad-right' layout='row' layout-align='start center'>
+    <mat-icon class='tc-faded push-right'>search</mat-icon>
+    <td-search-input class='pull-top-xs pull-bottom-sm' flex placeholder="search" [showUnderline]="false" (search)="searchInputTerm = $event"
+      (clear)="searchInputTerm = ''" (keyup)="applyFilter($event)">
+      ></td-search-input>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mat-content" layout="column" flex>
+    <table style="background:none" mat-table matSort multiTemplateDataRows [dataSource]="dataSource">
+      <!-- Checkbox Column -->
+      <ng-container matColumnDef="select">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+          </mat-checkbox>
+        </th>
+        <td mat-cell [style.width.px]="10" *matCellDef="let row">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+     <ng-container matColumnDef="start_time">
+				<th mat-header-cell *matHeaderCellDef> Start Time </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.start_time}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="sql">
+				<th mat-header-cell *matHeaderCellDef> SQL </th>
+				<td mat-cell width="30" *matCellDef="let element"> <td-highlight lang="sql" [routerLink]="['/editor']" >{{element.sql}}</td-highlight> </td>
+			</ng-container>
+
+			<ng-container matColumnDef="system">
+				<th mat-header-cell *matHeaderCellDef> Engine </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.system}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="user">
+				<th mat-header-cell *matHeaderCellDef> User </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.user}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="duration">
+				<th mat-header-cell *matHeaderCellDef> Duration </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.duration}} s </td>
+			</ng-container>
+
+      <ng-container matColumnDef="size">
+				<th mat-header-cell *matHeaderCellDef> Size </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.size}} MB </td>
+			</ng-container>
+
+      <ng-container matColumnDef="status">
+				<th mat-header-cell *matHeaderCellDef> Status </th>
+				<td mat-cell width="150" *matCellDef="let element"> 
+          {{element.status}} 
+        </td>
+			</ng-container>
+
+      <ng-container matColumnDef="actions">
+				<th mat-header-cell *matHeaderCellDef>  </th>
+				<td mat-cell width="10" *matCellDef="let element">
+          <button *ngIf="element.status === 'Succeeded'" mat-button color="accent">Download</button>
+          <button *ngIf="element.status === 'Failed'" mat-button color="warn">View logs</button>
+        </td>
+			</ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row  *matRowDef="let row; columns: displayedColumns" >
+      </tr>
+    </table>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-paginator pageSize="5" [pageSizeOptions]="[5, 10, 20, 25, 50, 100]" showFirstLastButtons>
+  </mat-paginator>
+</div>

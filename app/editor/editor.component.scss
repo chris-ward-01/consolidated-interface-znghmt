@@ -1,0 +1,11 @@
+:host{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  & ::ng-deep {
+    .td-layout-manage-list-sidenav {
+      display: flex !important;
+      overflow: hidden;
+    }
+  }
+}

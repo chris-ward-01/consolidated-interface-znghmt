@@ -1,0 +1,22 @@
+:host{
+  width: 100%;
+  mat-form-field{
+    width: 100%;
+  }
+  .text-normal {
+    text-transform: none;
+  }
+  .dropdown-icon {
+    font-size: 20px;
+  }
+  ::ng-deep{
+    .mat-select-panel mat-option.mat-option {
+      height: unset;
+    }
+
+   .mat-option-text.mat-option-text {
+      white-space: normal;
+    }
+  }
+}
+

@@ -1,0 +1,18 @@
+:host{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  ::ng-deep{
+    a{
+  .mat-list-item-content button{
+    display: none;
+  }
+  &:hover{
+    .mat-list-item-content button{
+    display: inherit;
+  }
+  }
+}
+  }
+}
+

@@ -1,0 +1,95 @@
+<div flex>
+    <ng-container *ngIf='!edit.isActive'>
+        <div class='pad pad-top-md'>
+          <div layout='row' class='pull-top pull-bottom-md' layout-align='end start'>
+            <button mat-icon-button (click)='edit.isActive = true;'>
+              <mat-icon class='tc-faded'>edit </mat-icon>
+            </button>
+          </div>
+          <div class='push-bottom pad-top-sm'>
+            <div class='mat-caption tc-faded push-bottom-sm'>Name</div>
+            <div class='tc mat-body-1'>Crimes Analysis</div>
+          </div>
+          <div class='push-bottom pad-top-sm'>
+            <div class='mat-caption tc-faded push-bottom-sm'>Short Description</div>
+            <div class='tc mat-body-1'>Times, locations and descriptions of crimes from the Boston Police Department
+            </div>
+          </div>
+          <div class='push-bottom pad-top-sm'>
+            <div class='mat-caption tc-faded push-bottom-sm'>Tags</div>
+            <mat-chip-list aria-label="Fish selection">
+              <mat-chip>finance</mat-chip>
+              <mat-chip>reports</mat-chip>
+              <mat-chip>analyst</mat-chip>
+              <mat-chip>production</mat-chip>
+            </mat-chip-list>
+          </div>
+          
+          <div class='push-bottom pad-top-sm'>
+            <div class='mat-caption tc-faded push-bottom-sm'>Description</div>
+            <td-markdown>
+### Context
+
+Crime incident reports are provided by Boston Police Department (BPD) to document the initial details surrounding an incident to which BPD officers respond. This is a dataset containing records from the new crime incident report system, which includes a reduced set of fields focused on capturing the type of incident as well as when and where it occured.
+
+### Content
+
+Records begin on June 14, 2015 and continue to August 08, 2020
+
+### Acknowledgements
+
+The data is provided by Analyze Boston. The most up-to-date version can be found here.
+
+### Inspiration
+
+What types of crimes are most common? Where are different types of crimes most likely to occur? Does the frequency of crimes change over the day? Week? Year?
+            </td-markdown>
+          </div>
+        </div>
+	</ng-container>
+
+	<ng-container *ngIf='edit.isActive'>
+    <td-message #messageDemo class="pad-sm push-bottom" color="accent" 
+ sublabel="Unsaved changes" icon="warning">
+      <button mat-button td-message-actions (click)='edit.isActive = false' class='push-right-sm'>CANCEL</button>
+      <button mat-stroked-button td-message-actions color='accent' [disabled]='!detailsForm.valid'>SAVE</button>
+    </td-message>
+    <mat-divider></mat-divider>
+    <div class='pad pad-top-md'>
+      <form #detailsForm="ngForm">
+        <div layout='column'>
+          <mat-form-field appearance='outline'>
+            <mat-label>Name</mat-label>
+            <input matInput required placeholder="title" value="Crime analysis">
+          </mat-form-field>
+
+          <mat-form-field appearance='outline'>
+            <mat-label>Short Description</mat-label>
+            <input matInput placeholder="Subtitle" value="Times, locations and descriptions of crimes from the Boston Police Department">
+          </mat-form-field>
+          <div class="push-bottom" layout="row">
+            <mat-form-field appearance='outline' flex>
+              <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                        [removable]="removable" (removed)="remove(fruit)">
+                  {{tag.name}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New tag..."
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur"
+                      (matChipInputTokenEnd)="add($event)">
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+          <div class="push-bottom">
+            <div class="pad-left-sm push-bottom mat-label">Description</div>
+            <td-text-editor [(ngModel)]="editorVal" name="editor"></td-text-editor>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+	</ng-container>
+</div>

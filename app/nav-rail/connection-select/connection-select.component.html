@@ -1,0 +1,101 @@
+
+<a mat-list-item [matMenuTriggerFor]="connectionsMenu">
+  <mat-icon matListIcon matTooltip="Active sessions" svgIcon="td-icons:server_foreign"></mat-icon>
+</a>
+<mat-menu #connectionsMenu="matMenu" [style.min-width.px]="280">
+    
+    <ng-template let-connection let-index="index" let-last="last" ngFor [ngForOf]="connections">
+      <button mat-menu-item flex [matMenuTriggerFor]="connectionMenu">
+        <div layout='row' layout-align='start center' flex>
+          <mat-icon matListAvatar *ngIf='connection.value === activeConnection' matTooltip="Active session" class='tc-positive' svgIcon="td-icons:server_changed"></mat-icon>
+          <mat-icon matListAvatar *ngIf='connection.value != activeConnection'  matTooltip="Available session" class='tc-faded' svgIcon="td-icons:server"></mat-icon>
+          <div class='mat-body-1 push-left-xs text-left'>
+            <div class="text-normal">
+              {{connection.viewValue}}
+            </div>
+            <div class="text-normal pull-bottom-sm pull-top-xs" *ngIf="index === 0">
+              <span class='mat-caption tc-faded'>finance_database</span>
+            </div>
+            <div>
+              <span class='text-normal mat-caption tc-faded text-md'>{{connection.user}}</span>
+            </div>
+          </div>
+        </div>
+      </button>
+      <mat-divider></mat-divider>
+      <mat-menu #connectionMenu="matMenu">
+        <button mat-menu-item *ngIf="index != 0">Set as active connection</button>
+        <button mat-menu-item  (click)='stopProp($event); openNewConnectionDialog()'>Edit connection</button>
+        <button mat-menu-item>Remove connection</button>
+      </mat-menu>
+    </ng-template>
+    <button mat-menu-item (click)='stopProp($event); openNewConnectionDialog()'>New Connection</button>
+  </mat-menu>
+  
+
+<!-- <div layout='row' layout-align='center center' class='pad-right'>
+	<mat-form-field appearance="outline" dense>
+		<mat-select [(value)]="activeConnection" disableRipple>
+
+
+			<mat-select-trigger>
+				<div layout='row' layout-align='center center'>
+					<mat-icon class='push-right-sm' matPrefix svgIcon="td-icons:server_foreign"></mat-icon>
+					<div class='mat-body-1 push-left-xs'>
+            <div>
+              {{ activeConnectionMetadata.viewValue }}
+            </div>
+            <div class="pull-bottom-sm pull-top-xs">
+							<span class='mat-caption tc-faded'>finance_database</span>
+						</div>
+						<div>
+							<span class='mat-caption tc-faded'>{{ activeConnectionMetadata.user }}</span>
+						</div>
+					</div>
+
+					<span flex></span>
+					<td-notification-count color='primary' [notifications]='connections.length' class='pull-right-xs'
+					matTooltip='Connections'></td-notification-count>
+
+				</div>
+
+			</mat-select-trigger>
+			<mat-option #connectionOptions *ngFor="let connection of connections; let first = first; let last = last"
+				[value]="connection.value" [class.push-top-sm]='first' [class.push-bottom-sm]='last'
+				[style.minWidth.px]='240'>
+
+
+				<div layout='row' layout-align='center center'>
+					<mat-icon *ngIf='connection.value === activeConnection' matTooltip="Active session" class='tc-positive' svgIcon="td-icons:server_changed"></mat-icon>
+          <mat-icon *ngIf='connection.value != activeConnection'  matTooltip="Available session" class='tc-faded' svgIcon="td-icons:server"></mat-icon>
+					<div>
+						<div class='mat-input pull-top-xs push-bottom-xs'>
+							{{connection.viewValue}}
+						</div>
+            <div class='mat-caption pull-top push-bottom-sm tc-faded'>
+							finance_database
+						</div>
+						<div class='mat-caption pull-top push-bottom-sm tc-faded'>
+							{{connection.user}}
+						</div>
+
+					</div>
+
+					<span flex></span>
+
+
+				</div>
+			</mat-option>
+
+			<mat-divider></mat-divider>
+
+			<div layout='row' class='pad-sm' disableRipple>
+				<button mat-button color='accent' (click)='stopProp($event); openNewConnectionDialog()'>
+          NEW CONNECTION
+        </button>
+			</div>
+
+		</mat-select>
+	</mat-form-field>
+
+</div> -->

@@ -1,0 +1,11 @@
+<mat-nav-list dense>
+  <ng-template let-version let-index="index" let-last="last" ngFor [ngForOf]="versions">
+    <a mat-list-item>
+      <mat-icon mat-list-icon>folder</mat-icon>
+      <div mat-line>v{{version.name}}</div>
+      <div mat-line> {{version.updated | date}} </div>
+      <mat-icon matTooltip="compare">compare_arrows</mat-icon>
+    </a>
+    <mat-divider *ngIf="!last"></mat-divider>
+  </ng-template>
+</mat-nav-list>

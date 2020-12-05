@@ -1,0 +1,127 @@
+<mat-divider></mat-divider>
+<div layout="column" flex class="overflow-hidden">
+    <ng-container *ngIf='!edit.isActive'>
+      <td-message #messageDemo class="push-bottom-sm" color="primary"  icon="">
+      <button mat-stroked-button td-message-actions (click)='edit.isActive = true;' class="text-upper">Edit</button>
+    </td-message>
+    <div layout='column' class="pad">
+      <div class="mat-body-2">Backup status</div>
+      <div class="push-bottom" layout="row">
+      <mat-slide-toggle class="push-bottom-sm" [(ngModel)]="isEnabled">{{ isEnabled ? 'Enabled' : 'Disabled'}}</mat-slide-toggle>
+      </div>
+      <div class="push-bottom" layout="row">
+        <mat-form-field flex-gt-sm="20" appearance='outline' layout="row">
+          <mat-label>Retention copies</mat-label>
+          <mat-select flex [value]="'5'">
+            
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="5">5</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="push-bottom" layout="row">
+        <mat-form-field flex-gt-sm="20" appearance='outline' layout="row">
+          <mat-label>Priority</mat-label>
+          <mat-select flex [value]="'5'">
+            
+            <mat-option value="1">1 (Highest)</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="5">5 (Lowest)</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="mat-body-2">Auto abort</div>
+      <div class='tc mat-body-1 push-bottom-sm'>
+        <mat-radio-group layout="column">
+          <mat-radio-button [value]="'neverAbort'" class="push-bottom-sm">Never</mat-radio-button>
+          <mat-radio-button [value]="'abort'" checked>On
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="push-bottom">
+        <div layout="row" layout-align="start center">
+          <mat-form-field flex-gt-sm="10" appearance='outline' layout="row"  class="push-right-sm">
+            <mat-select flex [value]="'1'">
+              <mat-option value="1">After</mat-option>
+              <mat-option value="2">Before</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field flex-gt-sm="15" appearance='outline'  layout="row" class="push-right-sm">
+            <mat-label>Hours</mat-label>
+            <mat-select flex placeholder="Hours" [value]="'5'">
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+              <mat-option value="5">5</mat-option>
+              <mat-option value="6">6</mat-option>
+              <mat-option value="7">7</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field flex-gt-sm="15" appearance='outline'  layout="row" >
+            <mat-label>Minutes</mat-label>
+            <mat-select flex placeholder="Minutes" [value]="'5'">
+              <mat-option value="1">1</mat-option>
+              <mat-option value="2">2</mat-option>
+              <mat-option value="3">3</mat-option>
+              <mat-option value="4">4</mat-option>
+              <mat-option value="5">5</mat-option>
+              <mat-option value="6">6</mat-option>
+              <mat-option value="7">7</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      
+    </div>
+	</ng-container>
+
+	<ng-container *ngIf='edit.isActive'>
+    <td-message #messageDemo class="push-bottom-sm" color="accent" 
+ sublabel="Unsaved changes" icon="warning">
+      <button mat-button td-message-actions (click)='edit.isActive = false' class='push-right-sm'>CANCEL</button>
+      <button mat-stroked-button td-message-actions color='accent' [disabled]='!detailsForm.valid'>SAVE</button>
+    </td-message>
+    <div class='pad mat-content' flex>
+      <form #detailsForm="ngForm">
+        <div layout='column'>
+          <mat-form-field appearance='outline'>
+            <mat-label>Name</mat-label>
+            <input matInput required placeholder="title" value="Crime analysis">
+          </mat-form-field>
+
+          <mat-form-field appearance='outline'>
+            <mat-label>Short Description</mat-label>
+            <input matInput placeholder="Subtitle" value="Times, locations and descriptions of crimes from the Boston Police Department">
+          </mat-form-field>
+          <div class="push-bottom" layout="row">
+            <mat-form-field appearance='outline' flex>
+              <mat-chip-list #chipList aria-label="Fruit selection">
+                <mat-chip *ngFor="let tag of tags" [selectable]="selectable"
+                        [removable]="removable" (removed)="remove(fruit)">
+                  {{tag.name}}
+                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                </mat-chip>
+                <input placeholder="New tag..."
+                      [matChipInputFor]="chipList"
+                      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                      [matChipInputAddOnBlur]="addOnBlur"
+                      (matChipInputTokenEnd)="add($event)">
+              </mat-chip-list>
+            </mat-form-field>
+          </div>
+          <div class="push-bottom">
+            <div class="pad-left-sm push-bottom mat-label">Description</div>
+            <td-text-editor [(ngModel)]="editorVal" name="editor"></td-text-editor>
+          </div>
+          
+        </div>
+      </form>
+    </div>
+	</ng-container>
+</div>

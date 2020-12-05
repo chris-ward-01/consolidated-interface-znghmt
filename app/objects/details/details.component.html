@@ -1,0 +1,286 @@
+<td-layout-manage-list [opened]="toggleList && showObjects && showDetails" mode="side" sidenavWidth='300' [class]="'bgc relative'">
+  <div flex layout="column" td-sidenav-content *ngIf="showObjects && showDetails">
+    <mat-toolbar flex="none" class='facade-font-to-remove mat-title mat-elevation-z0 bgc pad-right-none'>
+        <span [routerLink]="'/objects'">Objects</span>
+        <span flex></span>
+        <button mat-icon-button matTooltip="Search" (click)="toggleSearch()">
+          <mat-icon>search</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="Filter">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+        <button mat-icon-button matTooltip="New script">
+          <mat-icon>add</mat-icon>
+        </button>
+    </mat-toolbar>
+    <mat-divider></mat-divider>
+    <ng-container *ngIf="viewSearch">
+      <td-search-box #searchBoxElem alwaysVisible="true" backIcon="close" placeholder="search" flex="none" class="list-search pull-top-sm pull-bottom"></td-search-box>
+      <mat-divider></mat-divider>
+    </ng-container>
+    <div class="mat-content" flex *ngIf="topDatabases">
+      <div layout-gt-sm="row" layout-wrap>
+            <ng-template let-database let-index="index" let-last="last" ngFor [ngForOf]="databases">
+              <div flex="50">
+                <mat-card matRipple (click)="toggleTopDatabases()" class="cursor-pointer">
+                  <div layout="row" class="pad">
+                    <div flex>
+                      <div class="text-md">{{database.DatabaseName}}</div>
+                      <div layout="row" layout-align="start center" class="text-xs">
+                        <div layout="row" layout-align="start center" class="push-right-sm">
+                          <mat-icon svgIcon="td-icons:database"></mat-icon>
+                          <span>12</span>
+                        </div>
+                        <div layout="row" layout-align="start center" class="push-right-sm">
+                          <mat-icon>person</mat-icon>
+                          <span>91</span>
+                        </div>
+                        <div layout="row" layout-align="start center">
+                          <mat-icon>widgets</mat-icon>
+                          <span>4,092</span>
+                        </div>
+                      </div>
+                    </div>
+                    <mat-icon svgIcon="td-icons:database_lab"></mat-icon>
+                  </div>
+                </mat-card>
+              </div>
+            </ng-template>
+            </div>
+    </div>
+    <div class="mat-content" flex *ngIf="!topDatabases">
+          <div class="bgc pad-left-sm pad-right-sm">
+            <div layout="row" layout-align="start center">
+              <button mat-icon-button class="mat-button-sm" (click)="toggleTopDatabases()">
+                <mat-icon>arrow_back</mat-icon>
+              </button>
+              <p class="text-md push-left-xs" flex>ACC_MKTG_CNTMK_VW</p>
+              <button mat-icon-button class="mat-button-sm">
+                <mat-icon>info_outline</mat-icon>
+              </button>
+            </div>
+            <mat-tree dense [dataSource]="treeDataSource" [treeControl]="treeControl" class="mat-tree">
+              <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+                <li>
+                  <mat-nav-list dense class="mat-tree-node pad-left" layout="row">
+                    <button class="mat-button-sm" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+                      <mat-icon [@tdRotate]="{ value: !treeControl.isExpanded(node), params: { duration: 50, degreesEnd: -90 }}"
+                        class="mat-icon-rtl-mirror">
+                        arrow_drop_down
+                      </mat-icon>
+                    </button>
+                    <a mat-list-item disableRipple flex class="text-truncate">
+                      <mat-icon matListIcon style="margin: 0 -16px;" svgIcon="td-icons:database"></mat-icon>
+                      <span matLine>{{node.name}}</span>
+                    </a>
+                    <button class="mat-button-sm" mat-icon-button [mat-menu-trigger-for]="nodeMenu">
+                      <mat-icon class="tc-faded text-lg pull-top-xs">more_vert</mat-icon>
+                    </button>
+                    <mat-menu dense xPosition="before" #nodeMenu="matMenu">
+                      <button mat-menu-item>
+                        <span>Query</span>
+                      </button>
+                      <mat-divider></mat-divider>
+                      <button mat-menu-item [mat-menu-trigger-for]="copyMenu">
+                        <span>Copy</span>
+                      </button>
+                      <button mat-menu-item [mat-menu-trigger-for]="exportMenu">
+                        <span>Export</span>
+                      </button>
+                      <mat-divider></mat-divider>
+                      <a mat-menu-item [routerLink]="'/objects/details'">
+                        <span>Object Info</span>
+                      </a>
+                      <a mat-menu-item [routerLink]="'/objects/details/permissions'">
+                        <span>Object Permissions</span>
+                      </a>
+                    </mat-menu>
+                    <mat-menu dense #copyMenu="matMenu">
+                      <button mat-menu-item>
+                        <span>Into Database</span>
+                      </button>
+                      <mat-divider></mat-divider>
+                      <button mat-menu-item>
+                        <span>Into Lab</span>
+                      </button>
+                    </mat-menu>
+                    <mat-menu dense #exportMenu="matMenu">
+                      <button mat-menu-item>
+                        <span>CSV</span>
+                      </button>
+                      <mat-divider></mat-divider>
+                      <button mat-menu-item>
+                        <span>JSON</span>
+                      </button>
+                    </mat-menu>
+                  </mat-nav-list>
+                  <ul [class.mat-tree-invisible]="!treeControl.isExpanded(node)">
+                    <ng-container matTreeNodeOutlet></ng-container>
+                  </ul>
+                </li>
+              </mat-nested-tree-node>
+              <!-- This is the tree node template for leaf nodes -->
+              <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+                <li class="pad-left-md" flex>
+                  <mat-nav-list dense class="mat-tree-node" layout="row">
+                    <a mat-list-item disableRipple flex class="text-truncate">{{node.name}}</a>
+                    <button class="mat-button-sm" mat-icon-button>
+                      <mat-icon class="tc-faded text-lg pull-top-xs">more_vert</mat-icon>
+                    </button>
+                  </mat-nav-list>
+                </li>
+              </mat-tree-node>
+              
+            </mat-tree>
+          </div>
+        </div>
+  </div>
+  
+	<mat-toolbar class='facade-font-to-remove mat-elevation-z0 bgc'>
+    <mat-toolbar-row>
+      <span *ngIf="!showDetails">Objects</span>
+      <span *ngIf="showDetails">ACC_MKTG_CNTMK_VW</span>
+      <span flex></span>
+      <button
+        [id]="'visibility-pane-menu-button'"
+        data-cy="visibility-pane-menu-button"
+        mat-icon-button
+        class="text-upper"
+        [matMenuTriggerFor]="visibilityPaneMenu"
+        [matTooltip]="'Hide / Show panels'"
+      >
+        <mat-icon *ngIf="showObjects && showDetails">vertical_split</mat-icon>
+        <mat-icon *ngIf="showObjects && !showDetails">list</mat-icon>
+        <mat-icon *ngIf="!showObjects && showDetails">subtitles</mat-icon>
+      </button>
+      <mat-menu #visibilityPaneMenu="matMenu">
+        <button
+          [id]="'toggle-visibility-connection-button'"
+          data-cy="toggle-visibility-connection-button"
+          mat-menu-item
+          (click)="toggleObjectsVisibility(); $event.stopPropagation()"
+        >
+          <mat-pseudo-checkbox
+            [state]="showObjects ? 'checked' : 'unchecked'"
+          ></mat-pseudo-checkbox>
+          <mat-icon class="push-left-sm">list</mat-icon>
+          <span class="pull-left-sm">{{ 'Objects Panel' }}</span>
+        </button>
+        <button
+          data-cy="toggle-visibility-details-button"
+          mat-menu-item
+          (click)="toggleDetailsVisibility(); $event.stopPropagation()"
+        >
+          <mat-pseudo-checkbox
+            [state]="showDetails ? 'checked' : 'unchecked'"
+          ></mat-pseudo-checkbox>
+          <mat-icon class="push-left-sm">subtitles</mat-icon>
+          <span class="pull-left-sm">{{ 'Details Panel' }}</span>
+        </button>
+      </mat-menu>
+      <button mat-icon-button>
+        <mat-icon class='tc-faded'>
+          apps
+        </mat-icon>
+      </button>
+    </mat-toolbar-row>
+    <mat-toolbar-row class="pull-top" *ngIf="showDetails">
+      <nav mat-tab-nav-bar  class="pull-bottom">
+        <a mat-tab-link *ngFor='let view of detailViews' [routerLink]="view.link" routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive" [routerLinkActiveOptions]="{exact: true}"> {{ view.name }} </a>
+      </nav>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <ng-container *ngIf="showDetails">
+    <router-outlet></router-outlet>
+  </ng-container>
+  <ng-container *ngIf="!showDetails && showObjects">
+    <div class="mat-content" flex>
+      <mat-divider></mat-divider>
+      <td-search-box #searchBoxElem alwaysVisible="true" backIcon="close" placeholder="search" flex="none" class="list-search pull-top-sm pull-bottom"></td-search-box>
+      <mat-divider></mat-divider>
+      <mat-tree [style.width.%]="99" [dataSource]="treeDataSource" [treeControl]="treeControl" class="mat-tree">
+      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+        <li>
+          <mat-nav-list dense class="mat-tree-node pad-left" layout="row">
+            <button class="mat-button-sm" mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name">
+              <mat-icon [@tdRotate]="{ value: !treeControl.isExpanded(node), params: { duration: 50, degreesEnd: -90 }}"
+                class="mat-icon-rtl-mirror">
+                arrow_drop_down
+              </mat-icon>
+            </button>
+            <a mat-list-item disableRipple flex class="text-truncate">
+              <mat-icon matListIcon style="margin: 0 -16px;" svgIcon="td-icons:database"></mat-icon>
+              <span matLine>{{node.name}}</span>
+              <span [style.width.%]="25">24.52 TiB</span>
+              <span [style.width.%]="25">Database</span>
+            </a>
+            <button class="mat-button-sm" mat-icon-button [mat-menu-trigger-for]="nodeMenu">
+              <mat-icon class="tc-faded text-lg pull-top-xs">more_vert</mat-icon>
+            </button>
+            <mat-menu dense xPosition="before" #nodeMenu="matMenu">
+              <button mat-menu-item>
+                <span>Query</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item [mat-menu-trigger-for]="copyMenu">
+                <span>Copy</span>
+              </button>
+              <button mat-menu-item [mat-menu-trigger-for]="exportMenu">
+                <span>Export</span>
+              </button>
+              <mat-divider></mat-divider>
+              <a mat-menu-item [routerLink]="'/objects/details'">
+                <span>Object Info</span>
+              </a>
+              <a mat-menu-item [routerLink]="'/objects/details/permissions'">
+                <span>Object Permissions</span>
+              </a>
+            </mat-menu>
+            <mat-menu dense #copyMenu="matMenu">
+              <button mat-menu-item>
+                <span>Into Database</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item>
+                <span>Into Lab</span>
+              </button>
+            </mat-menu>
+            <mat-menu dense #exportMenu="matMenu">
+              <button mat-menu-item>
+                <span>CSV</span>
+              </button>
+              <mat-divider></mat-divider>
+              <button mat-menu-item>
+                <span>JSON</span>
+              </button>
+            </mat-menu>
+          </mat-nav-list>
+          <ul [class.mat-tree-invisible]="!treeControl.isExpanded(node)">
+            <ng-container matTreeNodeOutlet></ng-container>
+          </ul>
+        </li>
+        <mat-divider></mat-divider>
+      </mat-nested-tree-node>
+      <!-- This is the tree node template for leaf nodes -->
+      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
+        <li class="pad-left-md" flex>
+          <mat-nav-list dense class="mat-tree-node" layout="row">
+            <a mat-list-item disableRipple flex class="text-truncate">
+              <mat-icon matListIcon style="margin: 0 -16px;" svgIcon="td-icons:table"></mat-icon>
+              <span matLine>{{node.name}}</span>
+              <span [style.width.%]="25">24.52 TiB</span>
+              <span [style.width.%]="25">Table</span>  
+            </a>
+            <button class="mat-button-sm" mat-icon-button>
+              <mat-icon class="tc-faded text-lg pull-top-xs">more_vert</mat-icon>
+            </button>
+          </mat-nav-list>
+        </li>
+      </mat-tree-node>
+      
+    </mat-tree>
+    </div>
+  </ng-container>
+  
+</td-layout-manage-list>

@@ -1,0 +1,190 @@
+<td-layout layout-fill layout="column" flex class="relative">
+  <mat-toolbar flex="none" class='facade-font-to-remove bgc mat-elevation-z0'>
+    <span>Backups &amp; Data Recovery</span>
+    <span flex></span>
+    <button mat-icon-button class='tc-faded'>
+      <mat-icon>apps</mat-icon>
+    </button>
+  </mat-toolbar>
+  <mat-divider></mat-divider>
+  <div layout="column" flex="100" class="overflow-hidden">
+    <td-message icon="" *ngIf="selection.selected.length" [sublabel]="selection.selected.length + ' selected users'" class="pull-left" color="accent">
+      <button mat-stroked-button td-message-actions color='accent' class="push-right">
+        <span class="text-upper push-right-sm">Export</span>
+        <mat-icon>system_update_alt</mat-icon>
+      </button>
+      <button mat-icon-button td-message-actions class="push-right" matTooltip="Toggle columns" [matMenuTriggerFor]="columnsMenu">
+        <mat-icon  class='tc-faded'>view_column</mat-icon>
+      </button>
+      <mat-menu #columnsMenu="matMenu">
+        <div layout="column">
+          <ng-template let-column let-index="index" let-last="last" ngFor [ngForOf]="columnToggles">
+          <mat-checkbox class="pad" [checked]="true" matRipple (click)="columnClick(column)">{{column}}</mat-checkbox>
+          </ng-template>
+        </div>
+      </mat-menu>
+      <button mat-icon-button td-message-actions (click)="filters.toggle()">
+        <mat-icon class='tc-faded'>filter_list</mat-icon>
+      </button>
+    </td-message>
+    <div *ngIf="!selection.selected.length" class='pad-left pad-right' layout='row' layout-align='start center'>
+      <mat-icon class='tc-faded push-right'>search</mat-icon>
+      <td-search-input class='pull-top-xs pull-bottom-sm push-right' flex style="width: 100%;" placeholder="search" [showUnderline]="false" (search)="searchInputTerm = $event"
+        (clear)="searchInputTerm = ''" (keyup)="applyFilter($event)">
+        ></td-search-input>
+      <button mat-raised-button flex="none" disabled color='accent' class="push-right">
+        <span class="text-upper push-right-sm">Export</span>
+        <mat-icon>system_update_alt</mat-icon>
+      </button>
+      <button mat-icon-button class="push-right" matTooltip="Toggle columns" [matMenuTriggerFor]="columnsMenu">
+        <mat-icon  class='tc-faded'>view_column</mat-icon>
+      </button>
+      <mat-menu #columnsMenu="matMenu">
+        <div layout="column">
+          <ng-template let-column let-index="index" let-last="last" ngFor [ngForOf]="columnToggles">
+          <mat-checkbox class="pad" [checked]="true" matRipple (click)="columnClick(column)">{{column}}</mat-checkbox>
+          </ng-template>
+        </div>
+      </mat-menu>
+      <button mat-icon-button (click)="filters.toggle()">
+        <mat-icon class='tc-faded'>filter_list</mat-icon>
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+    <div layout="column" flex class="overflow-auto">
+      <mat-drawer-container layout="column" flex>
+        <mat-drawer-content layout="column" flex>
+          <div class="mat-content"  layout="column" flex>
+            <table mat-table matSort
+              [style.width.%]="100"
+              class="bgc"
+                [dataSource]="dataSource" multiTemplateDataRows>
+
+            <ng-container matColumnDef="select">
+              <th mat-header-cell *matHeaderCellDef>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()"
+                              [aria-label]="checkboxLabel()">
+                </mat-checkbox>
+              </th>
+              <td mat-cell [ngClass]="{'row-expanded': expandedElement === row}" [style.width.px]="10" *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)"
+                              [aria-label]="checkboxLabel(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> name </th>
+              <td mat-cell [style.width.px]="250" *matCellDef="let element" [routerLink]="['details']" class='cursor-pointer'> 
+                {{element.name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="engine">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> engine </th>
+              <td mat-cell [style.width.px]="150" *matCellDef="let element" [routerLink]="['details']" class='cursor-pointer'> 
+                {{element.engine}} </td>
+            </ng-container>
+            <ng-container matColumnDef="last" >
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> last </th>
+              <td mat-cell *matCellDef="let element" [style.width.px]="200" [routerLink]="['details']"> {{element.last | date:'MM/dd/yy a z'}} </td>
+            </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> status </th>
+              <td mat-cell *matCellDef="let element" [style.width.px]="100" [routerLink]="['details']"> 
+                <span [ngClass]="{'tc-positive': element.status === 'SUCCESS', 'tc-negative': element.status === 'FAILED', 'tc-caution': element.status === 'ERRORS'}">{{element.status}} </span>
+                
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="next">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header> next </th>
+              <td mat-cell *matCellDef="let element" [style.width.px]="180" [routerLink]="['details']">  {{element.next | date:'MM/dd/yy a z'}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let element; columns: displayedColumns;" 
+                [class.example-expanded-row]="expandedElement === element">
+            </tr>
+          </table>
+
+          </div>
+          <mat-divider></mat-divider>
+          <mat-paginator pageSize="25" [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons></mat-paginator>
+        </mat-drawer-content>
+        <mat-drawer flex layout="column" mode="side" opened="true" #filters position="end">
+          <td-sidesheet>
+            <td-sidesheet-header>
+              <td-sidesheet-title>Filters</td-sidesheet-title>
+              <button mat-icon-button td-sidesheet-header-action>
+                <mat-icon matTooltipPosition="before" matTooltip="Close" (click)="filters.toggle()">close</mat-icon>
+              </button>
+            </td-sidesheet-header>
+            <td-sidesheet-content flex layout="column">
+              <div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Type</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Backup Types</mat-option>
+                      <mat-option value="2">Engine System Logs</mat-option>
+                      <mat-option value="3">User Audit Logs</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Engines</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Engines</mat-option>
+                      <mat-option value="2">al183013</mat-option>
+                      <mat-option value="3">ka823842</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="push-top">
+                  <mat-form-field appearance="outline" flex>
+                    <mat-label>Status</mat-label>
+                    <mat-select value="1">
+                      <mat-option value="1">All Status</mat-option>
+                      <mat-option value="2">Success</mat-option>
+                      <mat-option value="3">Error</mat-option>
+                      <mat-option value="4">Info</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <mat-divider class="push-top push-bottom"></mat-divider>
+                <p class="text-lg pad-left-sm">Additional Filters</p>
+                <div layout="row" class="pull-top-sm pad-left-sm">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Date range</mat-label>
+                    <input matInput [matDatepicker]="picker">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="pull-top-sm pad-left-sm">
+                  <mat-form-field flex-gt-sm="60" appearance="outline">
+                    <mat-label>Start time</mat-label>
+                    <input matInput type="number" placeholder="Enter time" value="">
+                  </mat-form-field>
+                </div>
+                <div layout="row" class="pull-top-sm pad-left-sm">
+                  <mat-form-field flex-gt-sm="60" appearance="outline">
+                    <mat-label>End time</mat-label>
+                    <input matInput type="number" placeholder="Enter time" value="">
+                  </mat-form-field>
+                </div>
+              </div>
+            </td-sidesheet-content>
+            <td-sidesheet-actions>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left" color="accent">Apply</button>
+              <button (click)="filters.toggle()" mat-button class="text-upper push-left">Cancel</button>
+            </td-sidesheet-actions>
+          </td-sidesheet>
+        </mat-drawer>
+      </mat-drawer-container>
+
+    </div>
+  </div>
+</td-layout>

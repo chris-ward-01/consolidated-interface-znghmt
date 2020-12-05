@@ -1,0 +1,94 @@
+<div flex layout="row" layout-wrap>
+  <div flex-gt-sm="50">
+    <mat-card>
+      <mat-card-title class="text-lg">CPU Utilization</mat-card-title>
+      <td-chart [style.height.px]="250" [config]="chart1"></td-chart>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <a mat-button color="accent" class="text-upper">View full report</a>
+          <a mat-button  class="text-upper">API</a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div flex-gt-sm="50">
+    <mat-card>
+      <mat-card-title class="text-lg">Vantage Unit Consumption</mat-card-title>
+      <td-chart [style.height.px]="250" [config]="chart2"></td-chart>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <a mat-button color="accent" class="text-upper">View full report</a>
+          <a mat-button  class="text-upper">API</a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div flex-gt-sm="33">
+    <mat-card>
+      <mat-card-title class="text-lg">Contract Term Usage</mat-card-title>
+      <td-chart [style.height.px]="250" [config]="chart3"></td-chart>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <a mat-button color="accent" class="text-upper">View full report</a>
+          <a mat-button  class="text-upper">API</a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div flex-gt-sm="33">
+    <mat-card>
+      <mat-card-title class="text-lg">Terabyte Hours</mat-card-title>
+      <td-chart [style.height.px]="250" [config]="chart4"></td-chart>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <a mat-button color="accent" class="text-upper">View full report</a>
+          <a mat-button  class="text-upper">API</a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+  <div flex-gt-sm="33">
+    <mat-card>
+      <mat-card-title class="text-lg">
+        <div layout="row" layout-align="start center">
+          <span flex>Backup Usage</span>
+          <button mat-icon-button [matMenuTriggerFor]="chartMenu">
+            <mat-icon>tune</mat-icon>
+          </button>
+          <mat-menu #chartMenu="matMenu" xPosition="after" yPosition="below" [overlapTrigger]="false">
+            <td-menu>
+              <div td-menu-header class="mat-subheading-2 push-none">Visualization options</div>
+              <div layout="row" class="pad-sm push-bottom-sm">
+                <mat-radio-group layout="column" aria-label="Select an option">
+                  <mat-radio-button value="1" class="push-bottom-xs" [checked]="true">Vertical</mat-radio-button>
+                  <mat-radio-button value="2">Horizontal</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <mat-divider></mat-divider>
+              <div layout="row" class="pad-sm">
+                <mat-checkbox [checked]="false">Stacked</mat-checkbox>
+              </div>
+              <mat-divider></mat-divider>
+              <div layout="row" class="pad-sm">
+                <mat-checkbox [checked]="true">Grouped</mat-checkbox>
+              </div>
+            </td-menu>
+          </mat-menu>
+        </div>
+        
+      </mat-card-title>
+      <td-chart [style.height.px]="250" [config]="chart8"></td-chart>
+      <mat-divider></mat-divider>
+      <mat-card-actions>
+        <div layout="row">
+          <a mat-button color="accent" class="text-upper">View full report</a>
+          <a mat-button  class="text-upper">API</a>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

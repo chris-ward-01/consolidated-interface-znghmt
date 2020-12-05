@@ -1,0 +1,188 @@
+<td-layout layout-fill sidenavWidth='280px'>
+  <td-navigation-drawer flex>
+   <mat-nav-list>
+			<a mat-list-item tdLayoutToggle>
+				<mat-icon  matListIcon>menu</mat-icon>
+				<mat-icon  flex class="push-left push-right" [svgIcon]="_themeService.map({ 'dark-theme': 'assets:teradata', 'light-theme': 'assets:teradata-dark' }) | async"></mat-icon>
+			</a>
+			<mat-divider></mat-divider>
+			<a mat-list-item routerLinkActive="active" [routerLink]="'/'" [routerLinkActiveOptions]="{exact: true}" class='push-top-sm' href="https://adhoc-homepage.stackblitz.io/">
+				<mat-icon matListIcon matTooltip="Home" matTooltipPosition="after">home</mat-icon>
+				<h3  matLine>Home</h3>
+			</a>
+			<mat-divider class="push-sm"></mat-divider>
+			<a mat-list-item routerLinkActive="active" [routerLink]="'/editor'">
+				<mat-icon matListIcon matTooltip="Editor" matTooltipPosition="after"  svgIcon='td-icons:product_editor'></mat-icon>
+				<h3  matLine>Editor</h3>
+			</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="'/scripts'">
+				<mat-icon matListIcon matTooltip="Saved Scripts" matTooltipPosition="after"  svgIcon='td-icons:script'></mat-icon>
+				<h3  matLine>Saved Scripts</h3>
+			</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="'/objects'">
+				<mat-icon matListIcon matTooltip="Object management" matTooltipPosition="after"  svgIcon='td-icons:database_search'></mat-icon>
+				<h3  matLine>Object management</h3>
+			</a>
+      <mat-divider class="push-sm"></mat-divider>
+      <h3 matSubheader >Operations</h3>
+      <a mat-list-item routerLinkActive="active" [routerLink]="'/monitoring'">
+				<mat-icon matListIcon matTooltip="Monitoring" matTooltipPosition="after">bar_chart</mat-icon>
+				<h3  matLine>Monitoring</h3>
+			</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="'/engines'">
+				<mat-icon matListIcon matTooltip="SQL Engines" matTooltipPosition="after">memory</mat-icon>
+				<h3  matLine>SQL Engines</h3>
+			</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="'/logs'">
+				<mat-icon matListIcon matTooltip="Logs" matTooltipPosition="after">receipt</mat-icon>
+				<h3 matLine>Logs</h3>
+			</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="'/data-recovery'">
+				<mat-icon matListIcon matTooltip="Backups & Data Recovery" matTooltipPosition="after">backup</mat-icon>
+				<h3 matLine>Backups &amp; Data Recovery</h3>
+			</a>
+      <a mat-list-item [matMenuTriggerFor]="iam" routerLinkActive="active">
+				<mat-icon matListIcon matTooltip="Scripts" matTooltipPosition="after">people</mat-icon>
+				<h3  matLine>Identity &amp; Users</h3>
+				<mat-menu xPosition="after" yPosition="below" #iam="matMenu">
+					<a mat-menu-item routerLinkActive="active" [routerLink]="'/users'">
+            <span>Users &amp; Service accounts</span>
+          </a>
+					<a mat-menu-item routerLinkActive="active" [routerLink]="'/roles'">
+            <span>Roles</span>
+          </a>
+          <a mat-menu-item routerLinkActive="active" [routerLink]="'/identity-providers'">
+            <span>Identity providers</span>
+          </a>
+					<a mat-menu-item routerLinkActive="active" [routerLink]="'/user-federation'">
+            <span>User federation</span>
+          </a>
+				</mat-menu>
+      </a>
+      <a mat-list-item href="https://support.teradata.com" target="_blank">
+				<mat-icon matListIcon matTooltip="Support & Services" matTooltipPosition="after">live_help</mat-icon>
+				<h3  matLine>Support &amp; Service</h3>
+        <mat-icon  class="text-lg">launch</mat-icon>
+			</a>
+		</mat-nav-list>
+		<span flex></span>
+		<mat-nav-list [style.width.%]="100">
+      <mat-divider class="push-sm"></mat-divider>
+			<a mat-list-item [matMenuTriggerFor]="notificationsMenu" routerLinkActive="active">
+				<mat-icon matListIcon matTooltip="Notifications" matTooltipPosition="after">
+					notifications</mat-icon>
+				<h3 matLine >Notifications</h3>
+				<td-notification-count color="accent" [notifications]="5" [limit]=50>
+				</td-notification-count>
+				<mat-menu #notificationsMenu="matMenu" xPosition="after" yPosition="below" [overlapTrigger]="false">
+					<td-menu>
+						<div td-menu-header class="mat-subheading-2 push-none">Notifications</div>
+						<mat-nav-list dense>
+							<ng-template let-item let-last="last" ngFor [ngForOf]="[0,1,2,3,4]">
+								<a mat-list-item [routerLink]="'/notifications/details'">
+									<mat-icon matListAvatar>today</mat-icon>
+									<h4 matLine><span class="text-wrap">Notification subject</span></h4>
+									<p matLine>Notification message and details</p>
+								</a>
+								<mat-divider *ngIf="!last"></mat-divider>
+							</ng-template>
+						</mat-nav-list>
+            <div layout="row" layout-align="space-between center" td-menu-footer class="pad-left-sm pad-right-sm">
+              <a mat-button color="accent" routerLinkActive="active" [routerLink]="'/notifications'">
+                See All Notifications
+              </a>
+              <a mat-icon-button routerLinkActive="active" [routerLink]="'/settings/details'">
+                <mat-icon>settings</mat-icon>
+              </a>
+            </div>
+					</td-menu>
+				</mat-menu>
+			</a>
+			<a mat-list-item [matMenuTriggerFor]="help">
+				<mat-icon matListIcon matTooltip="Help" matTooltipPosition="after">help</mat-icon>
+				<h3  matLine>Help</h3>
+				<mat-menu xPosition="after" yPosition="below" #help="matMenu">
+          <h3 matSubheader class="tc-faded text-sm push-none pull-bottom">In-product help</h3>
+					<button mat-menu-item>
+            <span>Use Cases</span>
+          </button>
+          <button mat-menu-item [matMenuTriggerFor]="guidedTours">
+            <span>Guided tours &amp; tutorials</span>
+          </button>
+          <mat-divider></mat-divider>
+          <h3 matSubheader class="tc-faded text-sm push-none pull-bottom">External resources</h3>
+          <button mat-menu-item [matMenuTriggerFor]="docsMenu">
+            <mat-icon>launch</mat-icon>
+            <span flex>Documentation</span>
+          </button>
+          <a mat-menu-item>
+            <mat-icon>launch</mat-icon>
+            <span flex>Forums &amp; Community</span>
+          </a>
+          <a mat-menu-item>
+            <mat-icon>launch</mat-icon>
+            <span flex>Services &amp; Support</span>
+          </a>
+				</mat-menu>
+        <mat-menu #productHelp="matMenu">
+          <button mat-menu-item>User Guide</button>
+          <button mat-menu-item>Industry &amp; feature use cases</button>
+          <button mat-menu-item>APIs &amp; integrations</button>
+          <button mat-menu-item>SQL snippets &amp; templates</button>
+        </mat-menu>
+        <mat-menu #guidedTours="matMenu">
+          <button mat-menu-item [matMenuTriggerFor]="guidedToursEditor">Editor</button>
+          <button mat-menu-item>Analyst</button>
+          <button mat-menu-item>Console</button>
+        </mat-menu>
+        <mat-menu #guidedToursEditor="matMenu">
+          <button mat-menu-item>Explore Editor</button>
+          <button mat-menu-item>Write SQL Scripts</button>
+          <button mat-menu-item>Upload CSV</button>
+          <button mat-menu-item>Browse object stores</button>
+        </mat-menu>
+        <mat-menu #docsMenu="matMenu">
+          <button mat-menu-item>FAQ</button>
+          <button mat-menu-item>Trial quick start guide</button>
+          <button mat-menu-item>Analyst user guide</button>
+          <button mat-menu-item>Object storage guide</button>
+          <mat-divider></mat-divider>
+          <button mat-menu-item>Full documentation</button>
+        </mat-menu>
+			</a>
+      <a mat-list-item routerLinkActive="active" [routerLink]="'/settings'">
+				<mat-icon matListIcon matTooltip="Settings" matTooltipPosition="after">settings_applications</mat-icon>
+				<h3 matLine>Settings</h3>
+			</a>
+			<a mat-list-item [mat-menu-trigger-for]="userMenu">
+				<mat-icon matListIcon matTooltip="Account" matTooltipPosition="after">person</mat-icon>
+				<h3  matLine>Account</h3>
+        <mat-menu #userMenu="matMenu">
+          <button mat-menu-item (click)="toggleTheme()">
+            <mat-icon matListIcon>
+              {{ _themeService.map({ 'dark-theme': 'brightness_low', 'light-theme': 'brightness_4' }) | async }}
+            </mat-icon>
+            <span>
+              {{ _themeService.map({ 'dark-theme': 'Light Mode', 'light-theme': 'Dark Mode' }) | async }}
+            </span>
+        </button>
+        <ng-content></ng-content>
+        <mat-divider></mat-divider>
+        <button mat-menu-item (click)="sessionService.logout()">
+          <mat-icon >exit_to_app</mat-icon>
+          <span >{{ 'Sign out' }}</span>
+        </button>
+        </mat-menu>
+			</a>
+		</mat-nav-list>
+ </td-navigation-drawer>
+  <button hide-gt-xs mat-icon-button td-menu-button tdLayoutToggle>
+    <mat-icon>menu</mat-icon>
+  </button>
+  <div layout="row" flex layout-fill class="overflow-hidden">
+    <app-nav-rail hide-xs layout="column"></app-nav-rail>
+    <div flex layout="column" class="bgc">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</td-layout>

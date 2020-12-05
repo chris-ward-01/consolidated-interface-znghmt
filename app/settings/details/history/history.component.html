@@ -1,0 +1,77 @@
+<div class='pad-left pad-right' layout='row' layout-align='start center'>
+    <mat-icon class='tc-faded push-right'>search</mat-icon>
+<td-search-input
+class='pull-top-xs pull-bottom-sm'
+    style="
+    max-width: 600px;
+      width: 100%;
+    "
+    placeholder="Search"
+    [showUnderline]="false"
+    (search)="searchInputTerm = $event"
+    (clear)="searchInputTerm = ''">
+></td-search-input>
+<span flex></span>
+<button mat-icon-button>
+  <mat-icon class='tc-faded'>filter_list</mat-icon>
+</button>
+  </div>
+  <mat-divider></mat-divider>
+  <mat-drawer-container class="filters-drawer bgc">
+  <mat-drawer-content class='bgc'>
+    	<div flex class='bgc'>
+		<table style="width:100%;background:none" mat-table multiTemplateDataRows [dataSource]="dataSource">
+
+			<ng-container matColumnDef="name">
+				<th mat-header-cell *matHeaderCellDef> Name </th>
+				<td mat-cell width="20" *matCellDef="let element"> {{element.name}} </td>
+			</ng-container>
+
+			<ng-container matColumnDef="description">
+				<th mat-header-cell *matHeaderCellDef> Description </th>
+				<td mat-cell width="30" *matCellDef="let element"> {{element.description}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="sql">
+				<th mat-header-cell *matHeaderCellDef> SQL </th>
+				<td mat-cell width="30" *matCellDef="let element"> <td-highlight lang="sql">{{element.sql}}</td-highlight> </td>
+			</ng-container>
+
+			<ng-container matColumnDef="system">
+				<th mat-header-cell *matHeaderCellDef> System </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.system}} </td>
+			</ng-container>
+
+			<ng-container matColumnDef="status">
+				<th mat-header-cell *matHeaderCellDef> Status </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.status}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="start_time">
+				<th mat-header-cell *matHeaderCellDef> Start Time </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.start_time}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="duration">
+				<th mat-header-cell *matHeaderCellDef> Duration </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.duration}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="user">
+				<th mat-header-cell *matHeaderCellDef> User </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.user}} </td>
+			</ng-container>
+
+      <ng-container matColumnDef="size">
+				<th mat-header-cell *matHeaderCellDef> Size </th>
+				<td mat-cell width="10" *matCellDef="let element"> {{element.size}} </td>
+			</ng-container>
+
+			<tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+			<tr mat-row [routerLink]="['details']" class='cursor-pointer' *matRowDef="let row; columns: displayedColumns"
+				(click)="selection.toggle(row);">
+			</tr>
+		</table>
+	</div>
+  </mat-drawer-content>
+</mat-drawer-container>

@@ -1,0 +1,65 @@
+:host {
+  .icon-toolbar {
+    height: 48px;
+  }
+  td-layout::ng-deep {
+    > mat-sidenav-container > .td-layout-sidenav {
+      > .mat-drawer-inner-container {
+        overflow-x: hidden;
+      }
+      transition: all 0.1s ease-in;
+    }
+  }
+  .rail-closed {
+    td-notification-count {
+      transform: translateX(3px);
+    }
+    ::ng-deep {
+      .td-loading {
+          background: none;
+        }
+      .mat-list-base .mat-list-item .mat-list-item-content,
+      .mat-list-base .mat-list-option .mat-list-item-content {
+          padding: 0;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+      }
+    }
+  }
+  @media (min-width: 1440px) {
+    .rail-open {
+      width: 280px;
+    }
+    .rail-closed {
+      width: 72px;
+    }
+    .collapsed-logo {
+      transform: scale(1.4);
+    }
+  }
+  @media (min-width: 1024px) and (max-width: 1439px) {
+    .rail-open {
+      width: 280px;
+    }
+    .rail-closed {
+      width: 60px;
+    }
+    .collapsed-logo {
+      transform: scale(1.3);
+    }
+  }
+  @media (max-width: 1023px) {
+    .rail-open {
+      width: 280px;
+    }
+    .rail-closed {
+      width: 56px;
+    }
+    .collapsed-logo {
+      transform: scale(1.2);
+    }
+  }
+}
+
+

@@ -1,0 +1,229 @@
+@import '~@angular/material/theming';
+@import '~@covalent/core/theming/all-theme';
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&display=swap');
+// Plus imports for other components in your app.
+
+
+
+@import '@td-vantage/ui-platform/theming';
+
+// Custom typography
+$custom-typography: mat-typography-config(
+  $button: mat-typography-level(14px, 14px, 400)
+);
+$custom-toolbar-typography: mat-typography-config(
+  $title: mat-typography-level(20px, 32px, 400)
+);
+
+// Include the base styles for Angular Material core. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+@include mat-core($custom-typography);
+
+// Setting the toolbar to the proper spec weight
+@include mat-toolbar-typography($custom-toolbar-typography);
+
+// Manually import since we're not using platform.css
+// Include the core styles for Covalent
+@include covalent-core();
+// Include pre-bundled material-icons
+$mat-font-url: '../node_modules/@covalent/core/common/styles/font/';
+@include covalent-material-icons();
+// Include covalent utility classes
+@include covalent-utilities();
+// Include flex layout classes
+@include covalent-layout();
+// Include covalent color classes
+@include covalent-colors();
+
+// Create the theme object (a Sass map containing all of the palettes).
+$theme: mat-light-theme($td-primary, $td-accent, $td-warn);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($theme);
+@include covalent-theme($theme);
+@include teradata-brand($theme);
+/* ------------------------------------- DARK THEME ------------------------------------------ */
+
+.dark-theme {
+
+
+ $dark-theme: mat-dark-theme( $td-dark-primary, $td-dark-accent, $td-dark-warn);
+
+  @include angular-material-theme($dark-theme);
+  @include covalent-theme($dark-theme);
+  // Include Teradata brand
+  @include teradata-brand($dark-theme);
+
+  $background: map-get($dark-theme, background);
+
+
+  .hover{
+    background-color: mat-color($background, hover)
+  }
+
+  [class^='tc-grey-'],
+  [class*=' tc-grey-'],
+  td-menu {
+    color: white !important;
+  }
+  .mat-focused:not(.mat-form-field-invalid) .mat-form-field-placeholder {
+    color: mat-color($td-dark-primary, lighter);
+  }
+  .mat-paginator,
+  .mat-tree {
+    background: transparent;
+  }
+  .mat-drawer-container,
+  .mat-drawer,
+  .mat-header-cell {
+    background-color: #151C1F;
+  }
+  .mat-menu-panel {
+    background-color: #43515A;
+  }
+
+  .td-layout-manage-list-sidenav {
+    background-color: #151c20;
+  }
+  mat-nav-list .mat-list-item.active,
+  .mat-drawer mat-nav-list .mat-list-item.active {
+      color: #4CAFB1 !important;
+  }
+  .mat-stroked-button.mat-system-button:not([disabled]) {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  // Text editor
+  .editor-toolbar,
+  .CodeMirror,
+  .editor-preview {
+    &,
+    & button {
+      border-top-color: black !important;
+      border-left-color: black !important;
+      border-right-color: black !important;
+      border-color: black !important;
+      background-color: #151C20 !important;
+      color: white !important;
+    }
+    & .separator {
+      border-color: black !important;
+    }
+  }
+  .editor-toolbar.fullscreen::after,
+  .editor-toolbar.fullscreen::before {
+    background: transparent !important;
+  }
+  // tabs
+  .mat-tab-header {
+    border-bottom: 1px solid rgba(255,255,255,0.12) !important;
+  }
+}
+
+.td-layout-manage-list-sidenav{
+  background-color: #f5f5f5;
+}
+
+
+// Closest font to brand font, this should be deleted in favor of brand fonts
+body button.mat-button-base, body a.mat-tab-link, body .mat-tab-group .mat-tab-label, .facade-font-to-remove{
+  font-family: Montserrat !important;
+  font-weight: 600 !important;
+}
+
+body .mat-tab-header {
+  border-bottom: none !important;
+}
+
+
+$background: map-get($theme, background);
+
+ .hover{
+    background-color: mat-color($background, hover)
+  }
+
+/*
+
+Orginal Style from ethanschoonover.com/solarized (c) Jeremy Hull <sourdrums@gmail.com>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #002b36;
+  color: #839496;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #586e75;
+}
+
+/* Solarized Green */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-addition {
+  color: #859900;
+}
+
+/* Solarized Cyan */
+.hljs-number,
+.hljs-string,
+.hljs-meta .hljs-meta-string,
+.hljs-literal,
+.hljs-doctag,
+.hljs-regexp {
+  color: #2aa198;
+}
+
+/* Solarized Blue */
+.hljs-title,
+.hljs-section,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class {
+  color: #268bd2;
+}
+
+/* Solarized Yellow */
+.hljs-attribute,
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-class .hljs-title,
+.hljs-type {
+  color: #b58900;
+}
+
+/* Solarized Orange */
+.hljs-symbol,
+.hljs-bullet,
+.hljs-subst,
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-link {
+  color: #cb4b16;
+}
+
+/* Solarized Red */
+.hljs-built_in,
+.hljs-deletion {
+  color: #dc322f;
+}
+
+.hljs-formula {
+  background: #073642;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
