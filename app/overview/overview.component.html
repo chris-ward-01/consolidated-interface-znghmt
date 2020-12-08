@@ -168,7 +168,12 @@
                     <div flex-gt-md="70" class="text-left">
                       <div class="mat-subheading-2">This is Chris' card 1</div>
                       <div class="mat-body-1 pull-top push-bottom-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vehicula enim nec risus tristique suscipit. Sed at massa a nisl sollicitudin sollicitudin in vel erat. In hac habitasse platea dictumst. Phasellus posuere aliquet vulputate.</div>
-                      <button mat-button color="accent">Start tutorial</button>
+                      <mat-divider></mat-divider>
+                      <mat-card-actions>
+                  <div layout="row">
+                    <a mat-button color="accent" class="text-upper" [routerLink]="'scripts'">View Tutorials</a>
+                  </div>
+                </mat-card-actions>
                     </div>
                   </div>
                 </mat-card-content>
@@ -182,6 +187,7 @@
                     <div flex-gt-sm="70" class="text-left">
                       <div class="mat-subheading-2">Chris' card 2</div>
                       <div class="mat-body-1 pull-top push-bottom-sm">Cras nec augue a neque consectetur scelerisque. Quisque est massa, eleifend id magna nec, sollicitudin egestas sem. Quisque consequat arcu orci, sed dictum augue aliquam tristique. Vivamus id interdum arcu.more!</div>
+                       <mat-divider></mat-divider>
                       <button mat-button color="accent">Start tutorial</button>
                     </div>
                   </div>
