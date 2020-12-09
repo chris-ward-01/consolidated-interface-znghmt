@@ -95,7 +95,7 @@
                     <tr mat-row [routerLink]="['/objects/details']" class='cursor-pointer' *matRowDef="let row; columns: displayedColumns">
                     </tr>
                   </table>
-                  <mat-paginator  [pageSize]="1"></mat-paginator>
+                  <mat-paginator  [pageSize]="5"></mat-paginator>
                 </div>
                 <mat-divider></mat-divider>
                 <mat-card-actions>
@@ -117,6 +117,8 @@
                       <mat-icon>filter_list</mat-icon>
                     </button> 
                   </div>
+                   
+                  
                 </mat-card-title>
                 <div class="pad-xs">
                   <ng-template let-query let-index="index" let-last="last" ngFor [ngForOf]="history">
@@ -126,6 +128,7 @@
                     <mat-divider *ngIf="!last"></mat-divider>
                   </ng-template>
                 </div>
+                
                 <mat-divider></mat-divider>
                 <mat-card-actions>
                   <div layout="row">
