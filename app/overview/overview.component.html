@@ -141,7 +141,7 @@
               <br>
               <br>
 
-              <mat-card width: 50>
+              <mat-card>
                 <mat-card-title class="text-lg">Saved scripts &amp; queries</mat-card-title>
                 <mat-divider></mat-divider>
                 <mat-nav-list dense>
@@ -164,6 +164,31 @@
 
 
             </section>
+
+            <section>
+              <mat-card>
+                <mat-card-title class="text-lg">Saved scripts &amp; queries</mat-card-title>
+                <mat-divider></mat-divider>
+                <mat-nav-list dense>
+                  <ng-template let-script let-index="index" let-last="last" ngFor [ngForOf]="scripts">
+                    <a mat-list-item [routerLink]="'/scripts/details'">
+                      <div mat-line>{{script.name}}</div>
+                      <div mat-line> {{script.description}} </div>
+                      <mat-icon matTooltip="compare">info</mat-icon>
+                    </a>
+                    <mat-divider *ngIf="!last"></mat-divider>
+                  </ng-template>
+                </mat-nav-list>
+                <mat-divider></mat-divider>
+                <mat-card-actions>
+                  <div layout="row">
+                    <a mat-button color="accent" class="text-upper" [routerLink]="'scripts'">View all scripts</a>
+                  </div>
+                </mat-card-actions>
+              </mat-card>
+
+
+              </section>
 
             
 
